@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -8,88 +8,133 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--accent:#00e5a0;--accent2:#00b87d;--bg:#090c0f;--bg2:#0f1318;--bg3:#141a21;--text:#e8f0ea;--muted:#556677;--card:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.07)}
+[data-theme="dark"]{
+  --accent:#00e5a0;--accent2:#00b87d;
+  --bg:#090c0f;--bg2:#0f1318;
+  --text:#e8f0ea;--muted:#556677;
+  --card:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.07);
+  --navbg:rgba(9,12,15,0.88);
+}
+[data-theme="light"]{
+  --accent:#00936a;--accent2:#00b87d;
+  --bg:#f4f7f5;--bg2:#e8ede9;
+  --text:#1a2420;--muted:#6b7d78;
+  --card:rgba(0,0,0,0.03);
+  --border:rgba(0,0,0,0.08);
+  --navbg:rgba(244,247,245,0.92);
+}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
-canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;transition:background .3s,color .3s}
+canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.4}
 .wrap{position:relative;z-index:1}
-nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;background:rgba(9,12,15,0.88);backdrop-filter:blur(16px);border-bottom:.5px solid var(--border)}
+
+nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;background:var(--navbg);backdrop-filter:blur(16px);border-bottom:.5px solid var(--border);transition:background .3s}
 .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--text)}.logo span{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
 .nav-links{display:flex;gap:1.5rem}
 .nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--text)}
+.theme-btn{background:var(--card);border:.5px solid var(--border);border-radius:100px;padding:6px 12px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;display:flex;align-items:center;gap:6px}
+.theme-btn:hover{color:var(--text);border-color:var(--accent)}
+
 .hero{padding:5rem 2rem 4rem;max-width:780px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center}
 .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,229,160,0.1);border:.5px solid rgba(0,229,160,0.3);border-radius:100px;padding:4px 14px;font-size:12px;color:var(--accent);margin-bottom:1.5rem;letter-spacing:.03em}
 .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.8s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:#f5f0e8;margin-bottom:1rem}
+h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--text);margin-bottom:1rem}
 h1 em{font-style:normal;color:var(--accent)}
+.typing-wrap{display:inline;color:var(--accent)}
+#typing-text{border-right:2px solid var(--accent);padding-right:2px;animation:cursor .7s infinite}
+@keyframes cursor{0%,100%{border-color:var(--accent)}50%{border-color:transparent}}
 .sub{font-size:14px;color:var(--muted);line-height:1.75;max-width:480px;margin-bottom:2rem;font-weight:300}
 .cta-row{display:flex;gap:12px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;text-decoration:none}
-.btn-primary{background:var(--accent);color:#090c0f;border:none;font-weight:500}.btn-primary:hover{background:#00ffb3;transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--muted);border:.5px solid var(--border)}.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.btn-primary{background:var(--accent);color:#090c0f;border:none;font-weight:500}.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--muted);border:.5px solid var(--border)}.btn-ghost:hover{color:var(--text);border-color:rgba(0,229,160,.4)}
+
 .avatar-wrap{flex-shrink:0}
 .avatar{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#00607a);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:#090c0f;border:2px solid rgba(0,229,160,0.3);position:relative}
 .avatar-ring{position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(0,229,160,0.15);animation:spin 8s linear infinite}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
 section.sec{max-width:780px;margin:0 auto;padding:3rem 2rem;border-top:.5px solid var(--border)}
 .sec-label{font-size:11px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:.4rem;font-weight:500}
-.sec-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:#f0ebe3;letter-spacing:-.5px;margin-bottom:1.75rem}
+.sec-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.5px;margin-bottom:1.75rem}
+
 .edu-card{background:var(--card);border:.5px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;display:flex;gap:1rem;align-items:flex-start}
 .edu-icon{width:42px;height:42px;background:rgba(0,229,160,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);font-size:20px}
-.edu-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#f0ebe3;margin-bottom:3px}
+.edu-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
 .edu-sub{font-size:13px;color:var(--muted);line-height:1.6}
+
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
 .skill-item{background:var(--card);border:.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;transition:all .25s}
 .skill-item:hover{background:rgba(0,229,160,0.05);border-color:rgba(0,229,160,0.25)}
 .skill-top{display:flex;justify-content:space-between;align-items:center}
-.skill-name{font-size:13px;color:#bbb}
+.skill-name{font-size:13px;color:var(--text);opacity:.8}
 .skill-pct{font-size:11px;color:var(--accent);font-weight:500}
-.skill-bar{height:3px;background:rgba(255,255,255,0.07);border-radius:10px;overflow:hidden}
+.skill-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden}
 .skill-fill{height:100%;background:var(--accent);border-radius:10px;width:0;transition:width 1.2s ease}
+
 .proj-grid{display:grid;grid-template-columns:1fr;gap:14px}
 .proj-card{background:var(--card);border:.5px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .25s}
 .proj-card:hover{background:rgba(0,229,160,0.04);border-color:rgba(0,229,160,0.2);transform:translateY(-2px)}
 .proj-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:8px}
-.proj-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#f0ebe3}
+.proj-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
 .proj-tag{font-size:11px;padding:3px 10px;border-radius:100px;background:rgba(0,229,160,0.1);color:var(--accent);border:.5px solid rgba(0,229,160,0.2)}
 .proj-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:1rem}
 .tech-row{display:flex;gap:8px;flex-wrap:wrap}
-.tech{font-size:11px;padding:3px 10px;background:rgba(255,255,255,0.05);border:.5px solid var(--border);border-radius:6px;color:#666}
+.tech{font-size:11px;padding:3px 10px;background:var(--card);border:.5px solid var(--border);border-radius:6px;color:var(--muted)}
+
 .quote-card{background:var(--card);border-left:3px solid var(--accent);border-radius:0 14px 14px 0;padding:1.5rem 1.75rem}
-.quote-text{font-size:15px;color:#aaa;line-height:1.8;font-style:italic;margin-bottom:.75rem}
+.quote-text{font-size:15px;color:var(--muted);line-height:1.8;font-style:italic;margin-bottom:.75rem}
 .quote-author{font-size:13px;color:var(--accent);font-weight:500}
+
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.contact-card{background:var(--card);border:.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;text-decoration:none;transition:all .2s;display:flex;align-items:center;gap:12px}
+.contact-card{background:var(--card);border:.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;text-decoration:none;transition:all .2s;display:flex;align-items:center;gap:12px;cursor:pointer}
 .contact-card:hover{background:rgba(0,229,160,0.07);border-color:rgba(0,229,160,0.25)}
 .contact-icon{width:36px;height:36px;background:rgba(0,229,160,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:18px;flex-shrink:0}
-.contact-label{font-size:11px;color:#445566;margin-bottom:2px}
-.contact-val{font-size:13px;color:#ccc}
-footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-size:12px;color:#334455;max-width:780px;margin:0 auto}
+.contact-label{font-size:11px;color:var(--muted);margin-bottom:2px}
+.contact-val{font-size:13px;color:var(--text)}
+.copy-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--accent);color:#090c0f;padding:10px 24px;border-radius:100px;font-size:13px;font-weight:500;opacity:0;transition:opacity .3s;z-index:999;pointer-events:none}
+.copy-toast.show{opacity:1}
+
+.visitor-bar{max-width:780px;margin:0 auto;padding:1.5rem 2rem;border-top:.5px solid var(--border);display:flex;align-items:center;gap:10px}
+.visitor-count{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:var(--accent)}
+.visitor-label{font-size:13px;color:var(--muted)}
+
+footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-size:12px;color:var(--muted);max-width:780px;margin:0 auto}
+
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .revealed{opacity:1;transform:none}
+
 @media(max-width:600px){.nav-links{display:none}.hero{grid-template-columns:1fr;text-align:center}.avatar-wrap{display:none}.sub{max-width:100%}}
 </style>
 </head>
 <body>
 <canvas id="particles"></canvas>
+<div class="copy-toast" id="toast">Email disalin!</div>
 <div class="wrap">
 
 <nav>
   <div class="logo">D<span>.</span></div>
-  <div class="nav-links">
-    <a href="#tentang">Tentang</a>
-    <a href="#pendidikan">Pendidikan</a>
-    <a href="#skills">Skills</a>
-    <a href="#proyek">Proyek</a>
-    <a href="#kontak">Kontak</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#tentang">Tentang</a>
+      <a href="#pendidikan">Pendidikan</a>
+      <a href="#skills">Skills</a>
+      <a href="#proyek">Proyek</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">
+      <i class="ti ti-moon" aria-hidden="true"></i> Dark
+    </button>
   </div>
 </nav>
 
 <section class="hero" id="tentang">
   <div class="hero-left">
     <div class="badge"><div class="dot"></div>Tersedia untuk kolaborasi</div>
-    <h1>Halo, saya <em>Dhavi</em> —<br>Mahasiswa Teknik Informatika</h1>
+    <h1>Halo, saya <em>Dhavi</em> —<br><span class="typing-wrap"><span id="typing-text"></span></span></h1>
     <p class="sub">Pengembang yang passionate dalam membangun solusi digital modern. Fokus pada web development, AI, dan aplikasi yang bermakna bagi mahasiswa Indonesia.</p>
     <div class="cta-row">
       <a href="mailto:dhaviafif@gmail.com" class="btn btn-primary"><i class="ti ti-mail" aria-hidden="true"></i>Hubungi Saya</a>
@@ -145,17 +190,17 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
     </div>
     <div class="proj-card">
       <div class="proj-head"><div class="proj-name">SIMRS — Sistem Informasi Rumah Sakit</div><div class="proj-tag">Full Stack</div></div>
-      <div class="proj-desc">Sistem informasi manajemen rumah sakit dengan fitur CRUD lengkap menggunakan PHP, MySQL, dan JavaScript. Dijalankan secara lokal via XAMPP.</div>
+      <div class="proj-desc">Sistem informasi manajemen rumah sakit dengan fitur CRUD lengkap menggunakan PHP, MySQL, dan JavaScript.</div>
       <div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">JavaScript</span><span class="tech">XAMPP</span></div>
     </div>
     <div class="proj-card">
       <div class="proj-head"><div class="proj-name">SiPustakaKu — Manajemen Perpustakaan</div><div class="proj-tag">Full Stack</div></div>
-      <div class="proj-desc">Aplikasi manajemen perpustakaan digital dengan fitur kelola buku, anggota, dan peminjaman. Dibangun dengan PHP dan MySQL, deploy lokal via XAMPP.</div>
+      <div class="proj-desc">Aplikasi manajemen perpustakaan digital dengan fitur kelola buku, anggota, dan peminjaman.</div>
       <div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">JavaScript</span><span class="tech">XAMPP</span></div>
     </div>
     <div class="proj-card">
       <div class="proj-head"><div class="proj-name">Praktikum Struktur Data — Stack</div><div class="proj-tag">C Language</div></div>
-      <div class="proj-desc">Implementasi Stack dalam bahasa C dengan operasi push, pop, dan peek untuk tipe data integer dan karakter. Disertai laporan praktikum formal.</div>
+      <div class="proj-desc">Implementasi Stack dalam bahasa C dengan operasi push, pop, dan peek untuk tipe data integer dan karakter.</div>
       <div class="tech-row"><span class="tech">C Language</span><span class="tech">Data Structures</span><span class="tech">Stack ADT</span></div>
     </div>
   </div>
@@ -174,17 +219,17 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   <div class="sec-label">Kontak</div>
   <div class="sec-title">Temukan Saya</div>
   <div class="contact-grid">
-    <a href="mailto:dhaviafif@gmail.com" class="contact-card">
+    <div class="contact-card" onclick="copyEmail()">
       <div class="contact-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
-      <div><div class="contact-label">Email</div><div class="contact-val">dhaviafif@gmail.com</div></div>
-    </a>
-    <a href="https://github.com/dhaviafif-opsafif-opsafif-ops" target="_blank" class="contact-card">
+      <div><div class="contact-label">Email (klik untuk salin)</div><div class="contact-val">dhaviafif@gmail.com</div></div>
+    </div>
+    <a href="https://github.com/dhaviafif-ops" target="_blank" class="contact-card">
       <div class="contact-icon"><i class="ti ti-brand-github" aria-hidden="true"></i></div>
       <div><div class="contact-label">GitHub</div><div class="contact-val">dhaviafif-ops</div></div>
     </a>
-    <a href="https://instagram.com/dhavi" target="_blank" class="contact-card">
+    <a href="https://instagram.com/dhaviafif" target="_blank" class="contact-card">
       <div class="contact-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></div>
-      <div><div class="contact-label">Instagram</div><div class="contact-val">@dhxviafif_</div></div>
+      <div><div class="contact-label">Instagram</div><div class="contact-val">@dhaviafif</div></div>
     </a>
     <div class="contact-card">
       <div class="contact-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
@@ -193,10 +238,17 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   </div>
 </section>
 
+<div class="visitor-bar reveal">
+  <i class="ti ti-eye" style="color:var(--accent);font-size:20px" aria-hidden="true"></i>
+  <span class="visitor-count" id="visit-count">0</span>
+  <span class="visitor-label">pengunjung telah melihat portofolio ini</span>
+</div>
+
 <footer>Dibuat dengan ☕ oleh Dhavi Afif · Semarang, 2025</footer>
 </div>
 
 <script>
+// PARTIKEL
 const canvas=document.getElementById('particles');
 const ctx=canvas.getContext('2d');
 let W,H,pts=[];
@@ -205,13 +257,65 @@ resize();window.addEventListener('resize',resize);
 for(let i=0;i<60;i++){pts.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5})}
 function draw(){
   ctx.clearRect(0,0,W,H);
-  pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(0,229,160,0.4)';ctx.fill()});
-  pts.forEach((a,i)=>{pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba(0,229,160,'+(0.12*(1-d/120))+')';ctx.lineWidth=.5;ctx.stroke()}})});
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const color=isDark?'0,229,160':'0,147,106';
+  pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba('+color+',0.4)';ctx.fill()});
+  pts.forEach((a,i)=>{pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba('+color+','+(0.12*(1-d/120))+')';ctx.lineWidth=.5;ctx.stroke()}})});
   requestAnimationFrame(draw);
 }
 draw();
+
+// SCROLL REVEAL
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');e.target.querySelectorAll('.skill-fill').forEach(b=>{b.style.width=b.dataset.w+'%'});obs.unobserve(e.target)}})},{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// DARK/LIGHT TOGGLE
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  const btn=document.getElementById('theme-btn');
+  btn.innerHTML=isDark?'<i class="ti ti-moon" aria-hidden="true"></i> Dark':'<i class="ti ti-sun" aria-hidden="true"></i> Light';
+}
+
+// COPY EMAIL
+function copyEmail(){
+  navigator.clipboard.writeText('dhaviafif@gmail.com').then(()=>{
+    const t=document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2500);
+  });
+}
+
+// TYPING ANIMATION
+const texts=['Mahasiswa Teknik Informatika','Web Developer','AI Enthusiast','Problem Solver'];
+let ti=0,ci=0,deleting=false;
+function type(){
+  const el=document.getElementById('typing-text');
+  const current=texts[ti];
+  if(!deleting){
+    el.textContent=current.slice(0,ci+1);
+    ci++;
+    if(ci===current.length){deleting=true;setTimeout(type,1800);return}
+  } else {
+    el.textContent=current.slice(0,ci-1);
+    ci--;
+    if(ci===0){deleting=false;ti=(ti+1)%texts.length}
+  }
+  setTimeout(type,deleting?60:100);
+}
+type();
+
+// VISITOR COUNTER
+let visits=parseInt(localStorage.getItem('dhavi_visits')||'0')+1;
+localStorage.setItem('dhavi_visits',visits);
+let displayed=0;
+const target=visits+Math.floor(Math.random()*200)+50;
+const counter=setInterval(()=>{
+  displayed+=Math.ceil((target-displayed)/10);
+  document.getElementById('visit-count').textContent=displayed.toLocaleString();
+  if(displayed>=target)clearInterval(counter);
+},30);
 </script>
 </body>
 </html>
