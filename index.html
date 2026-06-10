@@ -1,194 +1,228 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id" data-theme="dark" data-lang="id">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Portofolio — Dhavi Afif</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-[data-theme="dark"]{--accent:#00e5a0;--accent2:#00b87d;--bg:#090c0f;--bg2:#0f1318;--text:#e8f0ea;--muted:#556677;--card:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.07);--navbg:rgba(9,12,15,0.92)}
-[data-theme="light"]{--accent:#00936a;--accent2:#00b87d;--bg:#f4f7f5;--bg2:#e8ede9;--text:#1a2420;--muted:#6b7d78;--card:rgba(0,0,0,0.03);--border:rgba(0,0,0,0.08);--navbg:rgba(244,247,245,0.92)}
+[data-theme="dark"]{--accent:#00e5a0;--accent2:#00b87d;--bg:#090c0f;--text:#e8f0ea;--muted:#556677;--card:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.07);--navbg:rgba(9,12,15,0.92);--shadow:rgba(0,229,160,0.15)}
+[data-theme="light"]{--accent:#00936a;--accent2:#00b87d;--bg:#f4f7f5;--text:#1a2420;--muted:#6b7d78;--card:rgba(0,0,0,0.03);--border:rgba(0,0,0,0.08);--navbg:rgba(244,247,245,0.92);--shadow:rgba(0,147,106,0.12)}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;transition:background .3s,color .3s;cursor:none}
-
-/* LOADING SCREEN */
-#loader{position:fixed;inset:0;background:#090c0f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;transition:opacity .6s,visibility .6s}
-#loader.hide{opacity:0;visibility:hidden}
-.loader-logo{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:#f0ebe3}.loader-logo span{color:#00e5a0}
-.loader-bar-wrap{width:200px;height:2px;background:rgba(255,255,255,0.07);border-radius:10px;overflow:hidden}
-.loader-bar{height:100%;width:0;background:#00e5a0;border-radius:10px;transition:width .05s linear}
-.loader-text{font-size:12px;color:#556677;letter-spacing:.1em}
-
-/* CUSTOM CURSOR */
-#cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .1s,background .2s;mix-blend-mode:screen}
-#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(0,229,160,0.4);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease,width .2s,height .2s}
-
-canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.4}
+canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
 .wrap{position:relative;z-index:1}
 
-nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;background:var(--navbg);backdrop-filter:blur(16px);border-bottom:.5px solid var(--border);transition:background .3s}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--text)}.logo span{color:var(--accent)}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-links{display:flex;gap:1.5rem}
-.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s;cursor:none}.nav-links a:hover{color:var(--text)}
-.nav-btn{background:var(--card);border:.5px solid var(--border);border-radius:100px;padding:6px 12px;cursor:none;font-size:13px;color:var(--muted);transition:all .2s;display:flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif}
-.nav-btn:hover{color:var(--text);border-color:rgba(0,229,160,.4)}
-.music-btn.playing{color:var(--accent);border-color:rgba(0,229,160,.4)}
+/* LOADER */
+#loader{position:fixed;inset:0;background:#090c0f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;transition:opacity .7s,visibility .7s}
+#loader.hide{opacity:0;visibility:hidden}
+.ld-logo{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:#f0ebe3}.ld-logo span{color:#00e5a0}
+.ld-wrap{width:220px;height:2px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden}
+.ld-bar{height:100%;width:0;background:linear-gradient(90deg,#00e5a0,#00607a);border-radius:10px}
+.ld-txt{font-size:12px;color:#445566;letter-spacing:.1em}
 
-.hero{padding:5rem 2rem 4rem;max-width:780px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center}
-.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,229,160,0.1);border:.5px solid rgba(0,229,160,0.3);border-radius:100px;padding:4px 14px;font-size:12px;color:var(--accent);margin-bottom:1.5rem;letter-spacing:.03em}
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:screen}
+#cur-ring{position:fixed;width:32px;height:32px;border:1.5px solid rgba(0,229,160,.35);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:.85rem 2rem;background:var(--navbg);backdrop-filter:blur(18px);border-bottom:.5px solid var(--border);transition:background .3s}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--text)}.logo span{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-links{display:flex;gap:.25rem;margin-right:.5rem}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;padding:5px 12px;border-radius:100px;transition:all .2s;cursor:none;border:.5px solid transparent}
+.nav-links a.active{color:var(--accent);background:rgba(0,229,160,.08);border-color:rgba(0,229,160,.2)}
+.nav-links a:hover{color:var(--text)}
+.nb{background:var(--card);border:.5px solid var(--border);border-radius:100px;padding:6px 11px;cursor:none;font-size:13px;color:var(--muted);transition:all .2s;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif}
+.nb:hover{color:var(--text);border-color:rgba(0,229,160,.4)}
+.nb.on{color:var(--accent);border-color:rgba(0,229,160,.4)}
+
+/* HERO */
+.hero{padding:5.5rem 2rem 4rem;max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,229,160,.1);border:.5px solid rgba(0,229,160,.3);border-radius:100px;padding:4px 14px;font-size:12px;color:var(--accent);margin-bottom:1.5rem;letter-spacing:.03em}
 .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.8s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--text);margin-bottom:1rem}
+h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.9rem);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--text);margin-bottom:1rem}
 h1 em{font-style:normal;color:var(--accent)}
-#typing-text{border-right:2px solid var(--accent);padding-right:2px;animation:cur .7s infinite}
-@keyframes cur{0%,100%{border-color:var(--accent)}50%{border-color:transparent}}
-.sub{font-size:14px;color:var(--muted);line-height:1.75;max-width:480px;margin-bottom:2rem;font-weight:300}
-.cta-row{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:none;transition:all .2s;text-decoration:none}
-.btn-primary{background:var(--accent);color:#090c0f;border:none;font-weight:500}.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--muted);border:.5px solid var(--border)}.btn-ghost:hover{color:var(--text);border-color:rgba(0,229,160,.4)}
+#typing-text{border-right:2px solid var(--accent);padding-right:2px;animation:cur-blink .7s infinite}
+@keyframes cur-blink{0%,100%{border-color:var(--accent)}50%{border-color:transparent}}
+.sub{font-size:14px;color:var(--muted);line-height:1.8;max-width:490px;margin-bottom:2rem;font-weight:300}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:none;transition:all .2s;text-decoration:none;border:none}
+.btn-p{background:var(--accent);color:#090c0f;font-weight:500}.btn-p:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 8px 24px var(--shadow)}
+.btn-g{background:transparent;color:var(--muted);border:.5px solid var(--border)}.btn-g:hover{color:var(--text);border-color:rgba(0,229,160,.4)}
+
+/* AVATAR */
 .avatar-wrap{flex-shrink:0}
-.avatar{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#00607a);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:#090c0f;border:2px solid rgba(0,229,160,0.3);position:relative}
-.avatar-ring{position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(0,229,160,0.15);animation:spin 8s linear infinite}
+.avatar{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#004d63);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:42px;font-weight:800;color:#090c0f;position:relative;border:2px solid rgba(0,229,160,.25)}
+.av-ring{position:absolute;inset:-8px;border-radius:50%;border:1px dashed rgba(0,229,160,.2);animation:spin 10s linear infinite}
+.av-ring2{position:absolute;inset:-16px;border-radius:50%;border:.5px solid rgba(0,229,160,.1);animation:spin 16s linear infinite reverse}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
-section.sec{max-width:780px;margin:0 auto;padding:3rem 2rem;border-top:.5px solid var(--border)}
+/* STATS BAR */
+.stats-bar{max-width:800px;margin:0 auto;padding:0 2rem 3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden}
+.stat-item{background:var(--bg);padding:1.25rem;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)}
+.stat-lbl{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* SECTION */
+section.sec{max-width:800px;margin:0 auto;padding:3rem 2rem;border-top:.5px solid var(--border)}
 .sec-label{font-size:11px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:.4rem;font-weight:500}
 .sec-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.5px;margin-bottom:1.75rem}
 
-.edu-card{background:var(--card);border:.5px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;display:flex;gap:1rem;align-items:flex-start}
-.edu-icon{width:42px;height:42px;background:rgba(0,229,160,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);font-size:20px}
-.edu-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
+/* EDU */
+.edu-card{background:var(--card);border:.5px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;transition:all .25s}
+.edu-card:hover{border-color:rgba(0,229,160,.2);background:rgba(0,229,160,.03)}
+.edu-icon{width:44px;height:44px;background:rgba(0,229,160,.1);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);font-size:22px}
+.edu-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
 .edu-sub{font-size:13px;color:var(--muted);line-height:1.6}
 
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
-.skill-item{background:var(--card);border:.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;transition:all .25s}
-.skill-item:hover{background:rgba(0,229,160,0.05);border-color:rgba(0,229,160,0.25)}
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+.skill-item{background:var(--card);border:.5px solid var(--border);border-radius:11px;padding:13px 15px;display:flex;flex-direction:column;gap:7px;transition:all .25s}
+.skill-item:hover{background:rgba(0,229,160,.05);border-color:rgba(0,229,160,.25);transform:translateY(-2px)}
 .skill-top{display:flex;justify-content:space-between;align-items:center}
-.skill-name{font-size:13px;color:var(--text);opacity:.8}
-.skill-pct{font-size:11px;color:var(--accent);font-weight:500}
+.skill-name{font-size:13px;color:var(--text);opacity:.85}
+.skill-pct{font-size:11px;color:var(--accent);font-weight:600}
 .skill-bar{height:3px;background:var(--border);border-radius:10px;overflow:hidden}
-.skill-fill{height:100%;background:var(--accent);border-radius:10px;width:0;transition:width 1.2s ease}
+.skill-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:10px;width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
 
 /* TIMELINE */
 .timeline{position:relative;padding-left:2rem}
 .timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:var(--border)}
 .tl-item{position:relative;margin-bottom:1.75rem}
-.tl-item:last-child{margin-bottom:0}
 .tl-dot{position:absolute;left:-2rem;top:4px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center}
-.tl-dot-inner{width:5px;height:5px;border-radius:50%;background:var(--accent)}
-.tl-date{font-size:11px;color:var(--accent);margin-bottom:4px;letter-spacing:.05em}
+.tl-inner{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.tl-date{font-size:11px;color:var(--accent);margin-bottom:3px;letter-spacing:.05em;font-weight:500}
 .tl-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
-.tl-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.tl-desc{font-size:13px;color:var(--muted);line-height:1.65}
 
-.proj-grid{display:grid;grid-template-columns:1fr;gap:14px}
-.proj-card{background:var(--card);border:.5px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .25s}
-.proj-card:hover{background:rgba(0,229,160,0.04);border-color:rgba(0,229,160,0.2);transform:translateY(-2px)}
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.proj-card{background:var(--card);border:.5px solid var(--border);border-radius:16px;padding:1.5rem;transition:all .3s;transform-style:preserve-3d;will-change:transform}
+.proj-card:hover{border-color:rgba(0,229,160,.25);box-shadow:0 16px 40px var(--shadow)}
 .proj-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:8px}
-.proj-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text)}
-.proj-tag{font-size:11px;padding:3px 10px;border-radius:100px;background:rgba(0,229,160,0.1);color:var(--accent);border:.5px solid rgba(0,229,160,0.2)}
+.proj-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text)}
+.proj-tag{font-size:11px;padding:3px 10px;border-radius:100px;background:rgba(0,229,160,.1);color:var(--accent);border:.5px solid rgba(0,229,160,.2)}
 .proj-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:1rem}
-.tech-row{display:flex;gap:8px;flex-wrap:wrap}
+.tech-row{display:flex;gap:6px;flex-wrap:wrap}
 .tech{font-size:11px;padding:3px 10px;background:var(--card);border:.5px solid var(--border);border-radius:6px;color:var(--muted)}
 
-.quote-card{background:var(--card);border-left:3px solid var(--accent);border-radius:0 14px 14px 0;padding:1.5rem 1.75rem}
-.quote-text{font-size:15px;color:var(--muted);line-height:1.8;font-style:italic;margin-bottom:.75rem}
+/* QUOTE */
+.quote-card{background:var(--card);border-left:3px solid var(--accent);border-radius:0 16px 16px 0;padding:1.75rem 2rem}
+.quote-text{font-size:16px;color:var(--muted);line-height:1.85;font-style:italic;margin-bottom:.75rem}
 .quote-author{font-size:13px;color:var(--accent);font-weight:500}
 
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.contact-card{background:var(--card);border:.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;text-decoration:none;transition:all .2s;display:flex;align-items:center;gap:12px;cursor:none}
-.contact-card:hover{background:rgba(0,229,160,0.07);border-color:rgba(0,229,160,0.25)}
-.contact-icon{width:36px;height:36px;background:rgba(0,229,160,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:18px;flex-shrink:0}
-.contact-label{font-size:11px;color:var(--muted);margin-bottom:2px}
-.contact-val{font-size:13px;color:var(--text)}
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:12px;color:var(--muted);letter-spacing:.03em}
+.form-group input,.form-group textarea{background:var(--card);border:.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14px;color:var(--text);font-family:'DM Sans',sans-serif;transition:border-color .2s;outline:none;resize:none}
+.form-group input:focus,.form-group textarea:focus{border-color:rgba(0,229,160,.4)}
+.form-group textarea{height:110px}
+.form-status{font-size:13px;margin-top:.75rem;color:var(--accent);min-height:20px}
 
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-bottom:2rem}
+.cc{background:var(--card);border:.5px solid var(--border);border-radius:13px;padding:1rem 1.25rem;text-decoration:none;transition:all .2s;display:flex;align-items:center;gap:12px;cursor:none}
+.cc:hover{background:rgba(0,229,160,.07);border-color:rgba(0,229,160,.25);transform:translateY(-1px)}
+.cc-icon{width:36px;height:36px;background:rgba(0,229,160,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:18px;flex-shrink:0}
+.cc-lbl{font-size:11px;color:var(--muted);margin-bottom:2px}
+.cc-val{font-size:13px;color:var(--text)}
+
+/* MISC */
 .copy-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--accent);color:#090c0f;padding:10px 24px;border-radius:100px;font-size:13px;font-weight:500;opacity:0;transition:opacity .3s;z-index:999;pointer-events:none}
 .copy-toast.show{opacity:1}
-
-.visitor-bar{max-width:780px;margin:0 auto;padding:1.5rem 2rem;border-top:.5px solid var(--border);display:flex;align-items:center;gap:10px}
-.visitor-count{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:var(--accent)}
-.visitor-label{font-size:13px;color:var(--muted)}
-
-/* SCROLL TO TOP */
-#scroll-top{position:fixed;bottom:2rem;right:2rem;width:42px;height:42px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;opacity:0;transition:opacity .3s,transform .2s;z-index:90;color:#090c0f;font-size:18px;border:none}
-#scroll-top.show{opacity:1}
+.visitor-bar{max-width:800px;margin:0 auto;padding:1.5rem 2rem;border-top:.5px solid var(--border);display:flex;align-items:center;gap:10px}
+.vc{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:var(--accent)}
+.vl{font-size:13px;color:var(--muted)}
+#scroll-top{position:fixed;bottom:2rem;right:2rem;width:42px;height:42px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;z-index:90;color:#090c0f;font-size:18px;border:none}
+#scroll-top.show{opacity:1;pointer-events:all}
 #scroll-top:hover{transform:translateY(-3px)}
-
-footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-size:12px;color:var(--muted);max-width:780px;margin:0 auto}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-size:12px;color:var(--muted);max-width:800px;margin:0 auto}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
 .revealed{opacity:1;transform:none}
-@media(max-width:600px){body{cursor:auto}#cursor,#cursor-ring{display:none}.nav-links{display:none}.hero{grid-template-columns:1fr;text-align:center}.avatar-wrap{display:none}.sub{max-width:100%}}
+@media(max-width:640px){body{cursor:auto}#cur,#cur-ring{display:none}.nav-links{display:none}.hero{grid-template-columns:1fr}.avatar-wrap{display:none}.proj-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- LOADING SCREEN -->
 <div id="loader">
-  <div class="loader-logo">D<span>.</span></div>
-  <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
-  <div class="loader-text" id="loader-text">Memuat portofolio...</div>
+  <div class="ld-logo">D<span>.</span></div>
+  <div class="ld-wrap"><div class="ld-bar" id="ld-bar"></div></div>
+  <div class="ld-txt" id="ld-txt">Memuat portofolio...</div>
 </div>
 
-<!-- CUSTOM CURSOR -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-
+<div id="cur"></div>
+<div id="cur-ring"></div>
 <div class="copy-toast" id="toast">Email disalin!</div>
-<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="ti ti-arrow-up" aria-hidden="true"></i></button>
-
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="ti ti-arrow-up"></i></button>
 <canvas id="particles"></canvas>
-<div class="wrap">
 
+<div class="wrap">
 <nav>
   <div class="logo">D<span>.</span></div>
   <div class="nav-right">
     <div class="nav-links">
-      <a href="#tentang">Tentang</a>
-      <a href="#pendidikan">Pendidikan</a>
-      <a href="#skills">Skills</a>
-      <a href="#timeline">Timeline</a>
-      <a href="#proyek">Proyek</a>
-      <a href="#kontak">Kontak</a>
+      <a href="#hero" class="nav-link active" data-id="hero" data-id-en="About" data-id-id="Tentang">Tentang</a>
+      <a href="#pendidikan" class="nav-link" data-id="pendidikan" data-id-en="Education" data-id-id="Pendidikan">Pendidikan</a>
+      <a href="#skills" class="nav-link" data-id="skills" data-id-en="Skills" data-id-id="Skills">Skills</a>
+      <a href="#timeline" class="nav-link" data-id="timeline" data-id-en="Journey" data-id-id="Timeline">Timeline</a>
+      <a href="#proyek" class="nav-link" data-id="proyek" data-id-en="Projects" data-id-id="Proyek">Proyek</a>
+      <a href="#kontak" class="nav-link" data-id="kontak" data-id-en="Contact" data-id-id="Kontak">Kontak</a>
     </div>
-    <button class="nav-btn music-btn" onclick="toggleMusic()" id="music-btn"><i class="ti ti-music" aria-hidden="true"></i></button>
-    <button class="nav-btn" onclick="toggleTheme()" id="theme-btn"><i class="ti ti-moon" aria-hidden="true"></i></button>
+    <button class="nb" onclick="toggleLang()" id="lang-btn"><i class="ti ti-language"></i> ID</button>
+    <button class="nb" onclick="toggleMusic()" id="music-btn"><i class="ti ti-music"></i></button>
+    <button class="nb" onclick="toggleTheme()" id="theme-btn"><i class="ti ti-moon"></i></button>
   </div>
 </nav>
 
-<section class="hero" id="tentang">
-  <div class="hero-left">
-    <div class="badge"><div class="dot"></div>Tersedia untuk kolaborasi</div>
-    <h1>Halo, saya <em>Dhavi</em> —<br><span id="typing-text"></span></h1>
-    <p class="sub">Pengembang yang passionate dalam membangun solusi digital modern. Fokus pada web development, AI, dan aplikasi yang bermakna bagi mahasiswa Indonesia.</p>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div>
+    <div class="badge"><div class="dot"></div><span data-id="badge-id">Tersedia untuk kolaborasi</span></div>
+    <h1><span data-id="hero-greet">Halo, saya</span> <em>Dhavi</em> —<br><span id="typing-text"></span></h1>
+    <p class="sub" data-id="hero-sub">Pengembang yang passionate dalam membangun solusi digital modern. Fokus pada web development, AI, dan aplikasi yang bermakna bagi mahasiswa Indonesia.</p>
     <div class="cta-row">
-      <a href="mailto:dhaviafif@gmail.com" class="btn btn-primary"><i class="ti ti-mail" aria-hidden="true"></i>Hubungi Saya</a>
-      <a href="cv-dhavi.pdf" download class="btn btn-ghost"><i class="ti ti-download" aria-hidden="true"></i>Download CV</a>
-      <a href="#proyek" class="btn btn-ghost"><i class="ti ti-arrow-down" aria-hidden="true"></i>Lihat Proyek</a>
+      <a href="mailto:dhaviafif@gmail.com" class="btn btn-p"><i class="ti ti-mail"></i><span data-id="btn-contact">Hubungi Saya</span></a>
+      <a href="cv-dhavi.pdf" download class="btn btn-g"><i class="ti ti-download"></i><span data-id="btn-cv">Download CV</span></a>
+      <a href="#proyek" class="btn btn-g"><i class="ti ti-arrow-down"></i><span data-id="btn-projects">Lihat Proyek</span></a>
     </div>
   </div>
   <div class="avatar-wrap">
-    <div class="avatar"><div class="avatar-ring"></div>DA</div>
+    <div class="avatar"><div class="av-ring"></div><div class="av-ring2"></div>DA</div>
   </div>
 </section>
 
+<!-- STATS -->
+<div class="stats-bar reveal">
+  <div class="stat-item"><div class="stat-num" data-target="4">0</div><div class="stat-lbl" data-id="stat1">Proyek Selesai</div></div>
+  <div class="stat-item"><div class="stat-num" data-target="10">0</div><div class="stat-lbl" data-id="stat2">Skills Dikuasai</div></div>
+  <div class="stat-item"><div class="stat-num" data-target="2">0</div><div class="stat-lbl" data-id="stat3">Tahun Belajar</div></div>
+  <div class="stat-item"><div class="stat-num" data-target="1">0</div><div class="stat-lbl" data-id="stat4">App di-Deploy</div></div>
+</div>
+
+<!-- PENDIDIKAN -->
 <section class="sec reveal" id="pendidikan">
-  <div class="sec-label">Pendidikan</div>
-  <div class="sec-title">Latar Belakang</div>
+  <div class="sec-label" data-id="edu-label">Pendidikan</div>
+  <div class="sec-title" data-id="edu-title">Latar Belakang</div>
   <div class="edu-card">
-    <div class="edu-icon"><i class="ti ti-school" aria-hidden="true"></i></div>
+    <div class="edu-icon"><i class="ti ti-school"></i></div>
     <div>
       <div class="edu-name">Universitas Stikubank Semarang</div>
-      <div class="edu-sub">S1 Teknik Informatika (Informatics Engineering)<br>Mata kuliah: Struktur Data · Matematika Diskrit · Kalkulus · Basis Data · Bahasa Indonesia · Pancasila</div>
+      <div class="edu-sub" data-id="edu-sub">S1 Teknik Informatika (Informatics Engineering)<br>Mata kuliah: Struktur Data · Matematika Diskrit · Kalkulus · Basis Data · Bahasa Indonesia · Pancasila</div>
     </div>
   </div>
 </section>
 
+<!-- SKILLS -->
 <section class="sec reveal" id="skills">
-  <div class="sec-label">Keahlian</div>
-  <div class="sec-title">Skills & Teknologi</div>
+  <div class="sec-label">Skills</div>
+  <div class="sec-title" data-id="skills-title">Skills & Teknologi</div>
   <div class="skills-grid">
     <div class="skill-item"><div class="skill-top"><span class="skill-name">HTML / CSS</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div></div>
     <div class="skill-item"><div class="skill-top"><span class="skill-name">JavaScript</span><span class="skill-pct">75%</span></div><div class="skill-bar"><div class="skill-fill" data-w="75"></div></div></div>
@@ -203,232 +237,267 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   </div>
 </section>
 
+<!-- TIMELINE -->
 <section class="sec reveal" id="timeline">
-  <div class="sec-label">Perjalanan</div>
-  <div class="sec-title">Timeline Belajar</div>
+  <div class="sec-label" data-id="tl-label">Perjalanan</div>
+  <div class="sec-title" data-id="tl-title">Timeline Belajar</div>
   <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-      <div class="tl-date">2023 — Awal</div>
-      <div class="tl-title">Mulai Belajar Pemrograman</div>
-      <div class="tl-desc">Mengenal HTML, CSS, dan JavaScript pertama kali. Belajar membuat halaman web sederhana dari nol.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-      <div class="tl-date">2023 — Semester 1</div>
-      <div class="tl-title">Masuk Universitas Stikubank</div>
-      <div class="tl-desc">Mulai kuliah Teknik Informatika. Mempelajari dasar-dasar algoritma, logika pemrograman, dan matematika diskrit.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-      <div class="tl-date">2024</div>
-      <div class="tl-title">Belajar Python & Database</div>
-      <div class="tl-desc">Mendalami Python, SQL, dan membangun aplikasi web pertama menggunakan PHP dan MySQL via XAMPP.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-      <div class="tl-date">2024 — Proyek</div>
-      <div class="tl-title">Membangun SIMRS & SiPustakaKu</div>
-      <div class="tl-desc">Membuat dua aplikasi full stack pertama — sistem informasi rumah sakit dan manajemen perpustakaan.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-      <div class="tl-date">2025</div>
-      <div class="tl-title">Meluncurkan SkripsiAI</div>
-      <div class="tl-desc">Membangun aplikasi berbasis AI menggunakan FastAPI dan Groq API, pertama kali deploy ke cloud via Railway.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"><div class="tl-dot-inner"></div></div>
-      <div class="tl-date">2025 — Sekarang</div>
-      <div class="tl-title">Terus Berkembang</div>
-      <div class="tl-desc">Memperdalam web development modern, REST API, dan eksplorasi teknologi AI untuk solusi nyata.</div>
-    </div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2023 — Awal</div><div class="tl-title" data-id="tl1-title">Mulai Belajar Pemrograman</div><div class="tl-desc" data-id="tl1-desc">Mengenal HTML, CSS, dan JavaScript pertama kali. Membuat halaman web sederhana dari nol.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2023 — Semester 1</div><div class="tl-title" data-id="tl2-title">Masuk Universitas Stikubank</div><div class="tl-desc" data-id="tl2-desc">Kuliah Teknik Informatika. Mempelajari algoritma, logika, dan matematika diskrit.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2024</div><div class="tl-title" data-id="tl3-title">Belajar Python & Database</div><div class="tl-desc" data-id="tl3-desc">Mendalami Python, SQL, dan membangun aplikasi web pertama dengan PHP & MySQL via XAMPP.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2024 — Proyek</div><div class="tl-title" data-id="tl4-title">Membangun SIMRS & SiPustakaKu</div><div class="tl-desc" data-id="tl4-desc">Dua aplikasi full stack pertama — sistem informasi rumah sakit dan manajemen perpustakaan.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025</div><div class="tl-title" data-id="tl5-title">Meluncurkan SkripsiAI</div><div class="tl-desc" data-id="tl5-desc">Membangun aplikasi AI dengan FastAPI dan Groq API, pertama kali deploy ke cloud via Railway.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025 — Sekarang</div><div class="tl-title" data-id="tl6-title">Terus Berkembang</div><div class="tl-desc" data-id="tl6-desc">Memperdalam web development modern, REST API, dan eksplorasi AI untuk solusi nyata.</div></div>
   </div>
 </section>
 
+<!-- PROYEK -->
 <section class="sec reveal" id="proyek">
-  <div class="sec-label">Proyek</div>
-  <div class="sec-title">Yang Pernah Dibuat</div>
+  <div class="sec-label" data-id="proj-label">Proyek</div>
+  <div class="sec-title" data-id="proj-title">Yang Pernah Dibuat</div>
   <div class="proj-grid">
-    <div class="proj-card">
-      <div class="proj-head"><div class="proj-name">SkripsiAI</div><div class="proj-tag">AI Web App</div></div>
-      <div class="proj-desc">Aplikasi web berbasis AI untuk membantu mahasiswa menemukan topik skripsi yang relevan. Dibangun dengan FastAPI dan model LLM Groq, di-deploy di Railway.</div>
-      <div class="tech-row"><span class="tech">HTML/CSS/JS</span><span class="tech">FastAPI</span><span class="tech">Groq API</span><span class="tech">Railway</span><span class="tech">llama-3.3-70b</span></div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-head"><div class="proj-name">SIMRS — Sistem Informasi Rumah Sakit</div><div class="proj-tag">Full Stack</div></div>
-      <div class="proj-desc">Sistem informasi manajemen rumah sakit dengan fitur CRUD lengkap menggunakan PHP, MySQL, dan JavaScript.</div>
-      <div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">JavaScript</span><span class="tech">XAMPP</span></div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-head"><div class="proj-name">SiPustakaKu — Manajemen Perpustakaan</div><div class="proj-tag">Full Stack</div></div>
-      <div class="proj-desc">Aplikasi manajemen perpustakaan digital dengan fitur kelola buku, anggota, dan peminjaman.</div>
-      <div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">JavaScript</span><span class="tech">XAMPP</span></div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-head"><div class="proj-name">Praktikum Struktur Data — Stack</div><div class="proj-tag">C Language</div></div>
-      <div class="proj-desc">Implementasi Stack dalam bahasa C dengan operasi push, pop, dan peek untuk tipe data integer dan karakter.</div>
-      <div class="tech-row"><span class="tech">C Language</span><span class="tech">Data Structures</span><span class="tech">Stack ADT</span></div>
-    </div>
+    <div class="proj-card"><div class="proj-head"><div class="proj-name">SkripsiAI</div><div class="proj-tag">AI Web App</div></div><div class="proj-desc">Aplikasi AI untuk membantu mahasiswa menemukan topik skripsi relevan. FastAPI + Groq API + Railway.</div><div class="tech-row"><span class="tech">HTML/CSS/JS</span><span class="tech">FastAPI</span><span class="tech">Groq API</span><span class="tech">Railway</span></div></div>
+    <div class="proj-card"><div class="proj-head"><div class="proj-name">SIMRS</div><div class="proj-tag">Full Stack</div></div><div class="proj-desc">Sistem informasi rumah sakit dengan CRUD lengkap menggunakan PHP, MySQL, dan JavaScript.</div><div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">XAMPP</span></div></div>
+    <div class="proj-card"><div class="proj-head"><div class="proj-name">SiPustakaKu</div><div class="proj-tag">Full Stack</div></div><div class="proj-desc">Manajemen perpustakaan digital — kelola buku, anggota, dan peminjaman dengan PHP & MySQL.</div><div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">XAMPP</span></div></div>
+    <div class="proj-card"><div class="proj-head"><div class="proj-name">Stack — C Language</div><div class="proj-tag">C Language</div></div><div class="proj-desc">Implementasi Stack dalam C: push, pop, peek untuk tipe data integer dan karakter.</div><div class="tech-row"><span class="tech">C Language</span><span class="tech">Data Structures</span><span class="tech">Stack ADT</span></div></div>
   </div>
 </section>
 
-<section class="sec reveal" id="quote">
-  <div class="sec-label">Quote</div>
-  <div class="sec-title">Filosofi Saya</div>
+<!-- QUOTE -->
+<section class="sec reveal">
+  <div class="sec-label" data-id="q-label">Quote</div>
+  <div class="sec-title" data-id="q-title">Filosofi Saya</div>
   <div class="quote-card">
-    <div class="quote-text">"Belajar bukan soal seberapa cepat kamu bisa, tapi seberapa dalam kamu memahami. Setiap baris kode adalah langkah kecil menuju solusi yang lebih baik."</div>
+    <div class="quote-text" data-id="q-text">"Belajar bukan soal seberapa cepat kamu bisa, tapi seberapa dalam kamu memahami. Setiap baris kode adalah langkah kecil menuju solusi yang lebih baik."</div>
     <div class="quote-author">— Dhavi Afif</div>
   </div>
 </section>
 
+<!-- KONTAK -->
 <section class="sec reveal" id="kontak">
-  <div class="sec-label">Kontak</div>
-  <div class="sec-title">Temukan Saya</div>
+  <div class="sec-label" data-id="c-label">Kontak</div>
+  <div class="sec-title" data-id="c-title">Temukan & Hubungi Saya</div>
   <div class="contact-grid">
-    <div class="contact-card" onclick="copyEmail()">
-      <div class="contact-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
-      <div><div class="contact-label">Email (klik untuk salin)</div><div class="contact-val">dhaviafif@gmail.com</div></div>
+    <div class="cc" onclick="copyEmail()" style="cursor:none">
+      <div class="cc-icon"><i class="ti ti-mail"></i></div>
+      <div><div class="cc-lbl" data-id="c-email-lbl">Email (klik salin)</div><div class="cc-val">dhaviafif@gmail.com</div></div>
     </div>
-    <a href="https://github.com/dhaviafif-ops" target="_blank" class="contact-card">
-      <div class="contact-icon"><i class="ti ti-brand-github" aria-hidden="true"></i></div>
-      <div><div class="contact-label">GitHub</div><div class="contact-val">dhaviafif-ops</div></div>
+    <a href="https://github.com/dhaviafif-ops" target="_blank" class="cc">
+      <div class="cc-icon"><i class="ti ti-brand-github"></i></div>
+      <div><div class="cc-lbl">GitHub</div><div class="cc-val">dhaviafif-ops</div></div>
     </a>
-    <a href="https://instagram.com/dhaviafif" target="_blank" class="contact-card">
-      <div class="contact-icon"><i class="ti ti-brand-instagram" aria-hidden="true"></i></div>
-      <div><div class="contact-label">Instagram</div><div class="contact-val">@dhaviafif</div></div>
+    <a href="https://instagram.com/dhaviafif" target="_blank" class="cc">
+      <div class="cc-icon"><i class="ti ti-brand-instagram"></i></div>
+      <div><div class="cc-lbl">Instagram</div><div class="cc-val">@dhaviafif</div></div>
     </a>
-    <div class="contact-card">
-      <div class="contact-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
-      <div><div class="contact-label">Lokasi</div><div class="contact-val">Semarang, Indonesia</div></div>
+    <div class="cc">
+      <div class="cc-icon"><i class="ti ti-map-pin"></i></div>
+      <div><div class="cc-lbl" data-id="c-loc-lbl">Lokasi</div><div class="cc-val">Semarang, Indonesia</div></div>
     </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-grid">
+    <div class="form-group"><label data-id="f-name">Nama</label><input type="text" id="f-name" placeholder="Nama kamu"/></div>
+    <div class="form-group"><label data-id="f-email">Email</label><input type="email" id="f-email" placeholder="email@kamu.com"/></div>
+    <div class="form-group full"><label data-id="f-msg">Pesan</label><textarea id="f-msg" placeholder="Tulis pesanmu di sini..."></textarea></div>
+    <div class="form-group full"><button class="btn btn-p" onclick="sendEmail()" style="width:fit-content"><i class="ti ti-send"></i><span data-id="f-send">Kirim Pesan</span></button><div class="form-status" id="form-status"></div></div>
   </div>
 </section>
 
+<!-- VISITOR -->
 <div class="visitor-bar reveal">
-  <i class="ti ti-eye" style="color:var(--accent);font-size:20px" aria-hidden="true"></i>
-  <span class="visitor-count" id="visit-count">0</span>
-  <span class="visitor-label">pengunjung telah melihat portofolio ini</span>
+  <i class="ti ti-eye" style="color:var(--accent);font-size:20px"></i>
+  <span class="vc" id="visit-count">0</span>
+  <span class="vl" data-id="visitor-lbl">pengunjung telah melihat portofolio ini</span>
 </div>
 
-<footer>Dibuat dengan ☕ oleh Dhavi Afif · Semarang, 2025</footer>
+<footer>Dibuat dengan ☕ oleh <strong>Dhavi Afif</strong> · Semarang, 2025</footer>
 </div>
 
 <script>
-// LOADING SCREEN
-const loaderMsgs=['Memuat portofolio...','Menyiapkan animasi...','Hampir selesai...','Selamat datang!'];
-let lp=0;
-const lbar=document.getElementById('loader-bar');
-const ltxt=document.getElementById('loader-text');
-const linterval=setInterval(()=>{
-  lp+=2;
-  lbar.style.width=lp+'%';
-  if(lp===30)ltxt.textContent=loaderMsgs[1];
-  if(lp===60)ltxt.textContent=loaderMsgs[2];
-  if(lp===90)ltxt.textContent=loaderMsgs[3];
-  if(lp>=100){clearInterval(linterval);setTimeout(()=>document.getElementById('loader').classList.add('hide'),400)}
-},20);
+// ── TRANSLATIONS ──
+const T={
+  id:{
+    "badge-id":"Tersedia untuk kolaborasi","hero-greet":"Halo, saya","hero-sub":"Pengembang yang passionate dalam membangun solusi digital modern. Fokus pada web development, AI, dan aplikasi yang bermakna bagi mahasiswa Indonesia.",
+    "btn-contact":"Hubungi Saya","btn-cv":"Download CV","btn-projects":"Lihat Proyek",
+    "stat1":"Proyek Selesai","stat2":"Skills Dikuasai","stat3":"Tahun Belajar","stat4":"App di-Deploy",
+    "edu-label":"Pendidikan","edu-title":"Latar Belakang","edu-sub":"S1 Teknik Informatika (Informatics Engineering)<br>Mata kuliah: Struktur Data · Matematika Diskrit · Kalkulus · Basis Data · Bahasa Indonesia · Pancasila",
+    "skills-title":"Skills & Teknologi","tl-label":"Perjalanan","tl-title":"Timeline Belajar",
+    "tl1-title":"Mulai Belajar Pemrograman","tl1-desc":"Mengenal HTML, CSS, dan JavaScript pertama kali. Membuat halaman web sederhana dari nol.",
+    "tl2-title":"Masuk Universitas Stikubank","tl2-desc":"Kuliah Teknik Informatika. Mempelajari algoritma, logika, dan matematika diskrit.",
+    "tl3-title":"Belajar Python & Database","tl3-desc":"Mendalami Python, SQL, dan membangun aplikasi web pertama dengan PHP & MySQL via XAMPP.",
+    "tl4-title":"Membangun SIMRS & SiPustakaKu","tl4-desc":"Dua aplikasi full stack pertama — sistem informasi rumah sakit dan manajemen perpustakaan.",
+    "tl5-title":"Meluncurkan SkripsiAI","tl5-desc":"Membangun aplikasi AI dengan FastAPI dan Groq API, pertama kali deploy ke cloud via Railway.",
+    "tl6-title":"Terus Berkembang","tl6-desc":"Memperdalam web development modern, REST API, dan eksplorasi AI untuk solusi nyata.",
+    "proj-label":"Proyek","proj-title":"Yang Pernah Dibuat",
+    "q-label":"Quote","q-title":"Filosofi Saya","q-text":"\"Belajar bukan soal seberapa cepat kamu bisa, tapi seberapa dalam kamu memahami. Setiap baris kode adalah langkah kecil menuju solusi yang lebih baik.\"",
+    "c-label":"Kontak","c-title":"Temukan & Hubungi Saya","c-email-lbl":"Email (klik salin)","c-loc-lbl":"Lokasi",
+    "f-name":"Nama","f-email":"Email","f-msg":"Pesan","f-send":"Kirim Pesan","visitor-lbl":"pengunjung telah melihat portofolio ini",
+  },
+  en:{
+    "badge-id":"Available for collaboration","hero-greet":"Hi, I'm","hero-sub":"A passionate developer building modern digital solutions. Focused on web development, AI, and apps that matter for Indonesian students.",
+    "btn-contact":"Contact Me","btn-cv":"Download CV","btn-projects":"View Projects",
+    "stat1":"Projects Done","stat2":"Skills Mastered","stat3":"Years Learning","stat4":"App Deployed",
+    "edu-label":"Education","edu-title":"Background","edu-sub":"B.Sc. Informatics Engineering<br>Courses: Data Structures · Discrete Math · Calculus · Database · Indonesian · Pancasila",
+    "skills-title":"Skills & Technologies","tl-label":"Journey","tl-title":"Learning Timeline",
+    "tl1-title":"Started Programming","tl1-desc":"First encounter with HTML, CSS, and JavaScript. Built simple web pages from scratch.",
+    "tl2-title":"Entered Stikubank University","tl2-desc":"Started Informatics Engineering. Studied algorithms, logic, and discrete mathematics.",
+    "tl3-title":"Learned Python & Database","tl3-desc":"Deepened Python, SQL skills and built first web apps with PHP & MySQL via XAMPP.",
+    "tl4-title":"Built SIMRS & SiPustakaKu","tl4-desc":"First two full-stack apps — hospital information system and library management.",
+    "tl5-title":"Launched SkripsiAI","tl5-desc":"Built AI app with FastAPI and Groq API, first cloud deployment via Railway.",
+    "tl6-title":"Keep Growing","tl6-desc":"Deepening modern web dev, REST API, and exploring AI for real-world solutions.",
+    "proj-label":"Projects","proj-title":"What I've Built",
+    "q-label":"Quote","q-title":"My Philosophy","q-text":"\"Learning isn't about how fast you can go, but how deep you can understand. Every line of code is a small step toward a better solution.\"",
+    "c-label":"Contact","c-title":"Find & Reach Me","c-email-lbl":"Email (click to copy)","c-loc-lbl":"Location",
+    "f-name":"Name","f-email":"Email","f-msg":"Message","f-send":"Send Message","visitor-lbl":"visitors have viewed this portfolio",
+  }
+};
+let lang='id';
+function applyLang(){
+  document.querySelectorAll('[data-id]').forEach(el=>{
+    const key=el.getAttribute('data-id');
+    if(T[lang][key]!==undefined)el.innerHTML=T[lang][key];
+  });
+  document.querySelectorAll('.nav-link').forEach(a=>{
+    a.textContent=lang==='id'?a.getAttribute('data-id-id'):a.getAttribute('data-id-en');
+  });
+  document.getElementById('lang-btn').innerHTML='<i class="ti ti-language"></i> '+(lang==='id'?'ID':'EN');
+  const typing=lang==='id'?['Mahasiswa Teknik Informatika','Web Developer','AI Enthusiast','Problem Solver']:['Informatics Student','Web Developer','AI Enthusiast','Problem Solver'];
+  window._typingTexts=typing;
+}
+function toggleLang(){lang=lang==='id'?'en':'id';applyLang()}
+applyLang();
 
-// CUSTOM CURSOR
-const cur=document.getElementById('cursor');
-const ring=document.getElementById('cursor-ring');
+// ── LOADER ──
+let lp=0;const ldMsgs=['Memuat portofolio...','Menyiapkan animasi...','Hampir selesai...','Selamat datang!'];
+const lbar=document.getElementById('ld-bar'),ltxt=document.getElementById('ld-txt');
+const li=setInterval(()=>{lp+=1.5;lbar.style.width=lp+'%';if(lp>30)ltxt.textContent=ldMsgs[1];if(lp>60)ltxt.textContent=ldMsgs[2];if(lp>88)ltxt.textContent=ldMsgs[3];if(lp>=100){clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hide'),500)}},18);
+
+// ── CURSOR ──
+const curEl=document.getElementById('cur'),ringEl=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
-function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
-animRing();
-document.querySelectorAll('a,button,.contact-card,.proj-card,.skill-item').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='48px';ring.style.height='48px';cur.style.transform='translate(-50%,-50%) scale(1.5)'});
-  el.addEventListener('mouseleave',()=>{ring.style.width='32px';ring.style.height='32px';cur.style.transform='translate(-50%,-50%) scale(1)'});
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;curEl.style.left=mx+'px';curEl.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ringEl.style.left=rx+'px';ringEl.style.top=ry+'px';requestAnimationFrame(animRing)})();
+document.querySelectorAll('a,button,.cc,.proj-card,.skill-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ringEl.style.width='50px';ringEl.style.height='50px';ringEl.style.borderColor='rgba(0,229,160,.6)';curEl.style.transform='translate(-50%,-50%) scale(1.6)'});
+  el.addEventListener('mouseleave',()=>{ringEl.style.width='32px';ringEl.style.height='32px';ringEl.style.borderColor='rgba(0,229,160,.35)';curEl.style.transform='translate(-50%,-50%) scale(1)'});
 });
 
-// PARTICLES
-const canvas=document.getElementById('particles');
-const ctx=canvas.getContext('2d');
-let W,H,pts=[];
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
-resize();window.addEventListener('resize',resize);
-for(let i=0;i<60;i++){pts.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5})}
-function draw(){
+// ── PARTICLES ──
+const cv=document.getElementById('particles'),ctx=cv.getContext('2d');
+let W,H;const pts=[];
+function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight}resize();window.addEventListener('resize',resize);
+for(let i=0;i<55;i++)pts.push({x:Math.random()*1920,y:Math.random()*1080,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.4+.4});
+function drawPts(){
   ctx.clearRect(0,0,W,H);
-  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  const c=isDark?'0,229,160':'0,147,106';
-  pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba('+c+',0.4)';ctx.fill()});
-  pts.forEach((a,i)=>{pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba('+c+','+(0.12*(1-d/120))+')';ctx.lineWidth=.5;ctx.stroke()}})});
-  requestAnimationFrame(draw);
-}
-draw();
+  const c=document.documentElement.getAttribute('data-theme')==='dark'?'0,229,160':'0,147,106';
+  pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba('+c+',.4)';ctx.fill()});
+  pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<110){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba('+c+','+(0.1*(1-d/110))+')';ctx.lineWidth=.5;ctx.stroke()}}));
+  requestAnimationFrame(drawPts);
+}drawPts();
 
-// SCROLL REVEAL & SKILL BARS
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');e.target.querySelectorAll('.skill-fill').forEach(b=>{b.style.width=b.dataset.w+'%'});obs.unobserve(e.target)}})},{threshold:.15});
+// ── SCROLL REVEAL + SKILL BARS + STATS ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('revealed');
+      e.target.querySelectorAll('.skill-fill').forEach(b=>{b.style.width=b.dataset.w+'%'});
+      e.target.querySelectorAll('[data-target]').forEach(el=>{
+        const target=+el.dataset.target;let n=0;
+        const step=setInterval(()=>{n+=Math.ceil(target/30);if(n>=target){n=target;clearInterval(step)}el.textContent=n+(target>2?'+':'')},40);
+      });
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-// DARK/LIGHT TOGGLE
+// ── ACTIVE NAV ON SCROLL ──
+const secs=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});
+  document.querySelectorAll('.nav-link').forEach(a=>{a.classList.toggle('active',a.getAttribute('data-id')===cur)});
+  document.getElementById('scroll-top').classList.toggle('show',window.scrollY>300);
+});
+
+// ── THEME ──
 function toggleTheme(){
-  const html=document.documentElement;
-  const isDark=html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme',isDark?'light':'dark');
-  const btn=document.getElementById('theme-btn');
-  btn.innerHTML=isDark?'<i class="ti ti-moon" aria-hidden="true"></i>':'<i class="ti ti-sun" aria-hidden="true"></i>';
+  const h=document.documentElement,d=h.getAttribute('data-theme')==='dark';
+  h.setAttribute('data-theme',d?'light':'dark');
+  document.getElementById('theme-btn').innerHTML=d?'<i class="ti ti-sun"></i>':'<i class="ti ti-moon"></i>';
 }
 
-// MUSIC
-let audioCtx=null,playing=false,osc=null,gain=null;
+// ── MUSIC ──
+let actx=null,playing=false,osc=null,gn=null,nInt=null;
 function toggleMusic(){
   const btn=document.getElementById('music-btn');
-  if(!audioCtx){audioCtx=new(window.AudioContext||window.webkitAudioContext)()}
+  if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();
   if(!playing){
-    osc=audioCtx.createOscillator();
-    gain=audioCtx.createGain();
-    osc.type='sine';
-    osc.frequency.setValueAtTime(220,audioCtx.currentTime);
-    gain.gain.setValueAtTime(0,audioCtx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.04,audioCtx.currentTime+0.5);
-    osc.connect(gain);gain.connect(audioCtx.destination);
-    osc.start();playing=true;
-    btn.classList.add('playing');
-    btn.innerHTML='<i class="ti ti-music-off" aria-hidden="true"></i>';
-    let t=0;
-    const notes=[220,246,261,293,329,293,261,246];
-    const ni=setInterval(()=>{if(!playing){clearInterval(ni);return}t=(t+1)%notes.length;osc.frequency.setTargetAtTime(notes[t],audioCtx.currentTime,0.1)},600);
-  } else {
-    gain.gain.linearRampToValueAtTime(0,audioCtx.currentTime+0.3);
-    setTimeout(()=>{osc.stop();playing=false},400);
-    btn.classList.remove('playing');
-    btn.innerHTML='<i class="ti ti-music" aria-hidden="true"></i>';
+    osc=actx.createOscillator();gn=actx.createGain();
+    osc.type='sine';osc.frequency.value=261;
+    gn.gain.setValueAtTime(0,actx.currentTime);
+    gn.gain.linearRampToValueAtTime(0.04,actx.currentTime+.5);
+    osc.connect(gn);gn.connect(actx.destination);osc.start();playing=true;
+    btn.classList.add('on');btn.innerHTML='<i class="ti ti-music-off"></i>';
+    const notes=[261,294,329,349,392,349,329,294];let ni=0;
+    nInt=setInterval(()=>{if(!playing)return;ni=(ni+1)%notes.length;osc.frequency.setTargetAtTime(notes[ni],actx.currentTime,.08)},700);
+  }else{
+    clearInterval(nInt);gn.gain.linearRampToValueAtTime(0,actx.currentTime+.3);
+    setTimeout(()=>{try{osc.stop()}catch(e){}playing=false},400);
+    btn.classList.remove('on');btn.innerHTML='<i class="ti ti-music"></i>';
   }
 }
 
-// COPY EMAIL
-function copyEmail(){
-  navigator.clipboard.writeText('dhaviafif@gmail.com').then(()=>{
-    const t=document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'),2500);
-  });
-}
-
-// TYPING
-const texts=['Mahasiswa Teknik Informatika','Web Developer','AI Enthusiast','Problem Solver'];
+// ── TYPING ──
+window._typingTexts=['Mahasiswa Teknik Informatika','Web Developer','AI Enthusiast','Problem Solver'];
 let ti=0,ci=0,del=false;
 function type(){
   const el=document.getElementById('typing-text');
-  const cur=texts[ti];
+  const texts=window._typingTexts;const cur=texts[ti%texts.length];
   if(!del){el.textContent=cur.slice(0,ci+1);ci++;if(ci===cur.length){del=true;setTimeout(type,1800);return}}
-  else{el.textContent=cur.slice(0,ci-1);ci--;if(ci===0){del=false;ti=(ti+1)%texts.length}}
-  setTimeout(type,del?60:100);
+  else{el.textContent=cur.slice(0,ci-1);ci--;if(ci===0){del=false;ti++}}
+  setTimeout(type,del?55:95);
+}type();
+
+// ── COPY EMAIL ──
+function copyEmail(){
+  navigator.clipboard.writeText('dhaviafif@gmail.com').then(()=>{
+    const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+  });
 }
-type();
 
-// VISITOR COUNTER
-let v=parseInt(localStorage.getItem('dhavi_v4')||'0')+1;
-localStorage.setItem('dhavi_v4',v);
-let disp=0;const tgt=v+Math.floor(Math.random()*300)+100;
-const ctr=setInterval(()=>{disp+=Math.ceil((tgt-disp)/8);document.getElementById('visit-count').textContent=disp.toLocaleString();if(disp>=tgt)clearInterval(ctr)},25);
+// ── EMAILJS FORM ──
+emailjs.init('YOUR_PUBLIC_KEY');
+function sendEmail(){
+  const name=document.getElementById('f-name').value;
+  const email=document.getElementById('f-email').value;
+  const msg=document.getElementById('f-msg').value;
+  const status=document.getElementById('form-status');
+  if(!name||!email||!msg){status.textContent='⚠️ Semua field harus diisi!';status.style.color='#ff6b6b';return}
+  status.textContent='Mengirim...';status.style.color='var(--muted)';
+  emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID',{from_name:name,from_email:email,message:msg})
+    .then(()=>{status.textContent='✅ Pesan berhasil dikirim!';status.style.color='var(--accent)';document.getElementById('f-name').value='';document.getElementById('f-email').value='';document.getElementById('f-msg').value=''})
+    .catch(()=>{status.textContent='❌ Gagal kirim. Coba hubungi via email langsung.';status.style.color='#ff6b6b'});
+}
 
-// SCROLL TO TOP
-window.addEventListener('scroll',()=>{
-  document.getElementById('scroll-top').classList.toggle('show',window.scrollY>300);
+// ── 3D TILT CARDS ──
+document.querySelectorAll('.proj-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width-.5)*14;
+    const y=((e.clientY-r.top)/r.height-.5)*-14;
+    card.style.transform=`perspective(600px) rotateY(${x}deg) rotateX(${y}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform='';});
 });
+
+// ── VISITOR COUNTER ──
+let v=parseInt(localStorage.getItem('dhavi_v5')||'0')+1;
+localStorage.setItem('dhavi_v5',v);
+let d=0;const tgt=v+Math.floor(Math.random()*400)+150;
+const ctr=setInterval(()=>{d+=Math.ceil((tgt-d)/7);document.getElementById('visit-count').textContent=d.toLocaleString();if(d>=tgt)clearInterval(ctr)},22);
 </script>
 </body>
 </html>
