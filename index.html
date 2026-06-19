@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark" data-lang="id">
+<html lang="id" data-theme="dark" data-lang="id" data-color="cyan">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -8,56 +8,68 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --a:#00d4c8;--a2:#0097a7;--a3:#4eeee8;
-  --bg:#0d1a1c;--bg2:#122023;--bg3:#091213;
-  --text:#e0f7f6;--muted:#4a7070;
-  --nm-dark:rgba(0,0,0,0.45);--nm-light:rgba(255,255,255,0.05);
-  --glow:rgba(0,212,200,0.22);--glow2:rgba(0,212,200,0.10);
-  --border:rgba(0,212,200,0.12);--navbg:rgba(13,26,28,0.93);
-}
-[data-theme="light"]{
-  --a:#0097a7;--a2:#00838f;--a3:#00bcd4;
-  --bg:#e8f5f5;--bg2:#ddf0f0;--bg3:#f0fafa;
-  --text:#0d2b2b;--muted:#5a8080;
-  --nm-dark:rgba(163,190,190,0.6);--nm-light:rgba(255,255,255,0.85);
-  --glow:rgba(0,151,167,0.15);--glow2:rgba(0,151,167,0.08);
-  --border:rgba(0,151,167,0.15);--navbg:rgba(232,245,245,0.93);
-}
+/* COLOR THEMES */
+[data-color="cyan"]{--a:#00d4c8;--a2:#0097a7;--a3:#4eeee8;--glow:rgba(0,212,200,0.22);--glow2:rgba(0,212,200,0.10);--border:rgba(0,212,200,0.12)}
+[data-color="purple"]{--a:#a855f7;--a2:#7c3aed;--a3:#c084fc;--glow:rgba(168,85,247,0.22);--glow2:rgba(168,85,247,0.10);--border:rgba(168,85,247,0.12)}
+[data-color="orange"]{--a:#f97316;--a2:#ea580c;--a3:#fb923c;--glow:rgba(249,115,22,0.22);--glow2:rgba(249,115,22,0.10);--border:rgba(249,115,22,0.12)}
+[data-color="green"]{--a:#22c55e;--a2:#16a34a;--a3:#4ade80;--glow:rgba(34,197,94,0.22);--glow2:rgba(34,197,94,0.10);--border:rgba(34,197,94,0.12)}
+[data-color="pink"]{--a:#ec4899;--a2:#db2777;--a3:#f472b6;--glow:rgba(236,72,153,0.22);--glow2:rgba(236,72,153,0.10);--border:rgba(236,72,153,0.12)}
+[data-theme="dark"]{--bg:#0d1a1c;--bg2:#122023;--bg3:#091213;--text:#e0f7f6;--muted:#4a7070;--nm-dark:rgba(0,0,0,0.45);--nm-light:rgba(255,255,255,0.05);--navbg:rgba(13,26,28,0.93)}
+[data-theme="light"]{--bg:#f0f7f7;--bg2:#e0efef;--bg3:#f8fbfb;--text:#0d2b2b;--muted:#5a8080;--nm-dark:rgba(163,190,190,0.6);--nm-light:rgba(255,255,255,0.85);--navbg:rgba(240,247,247,0.93)}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;transition:background .5s,color .5s;cursor:none}
-
-/* THEME TRANSITION OVERLAY */
+#scroll-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--a3),var(--a2));width:0%;z-index:9999;box-shadow:0 0 8px var(--glow)}
 #theme-overlay{position:fixed;inset:0;background:var(--a);z-index:9990;opacity:0;pointer-events:none;border-radius:50%;transform:scale(0);transition:transform .6s ease,opacity .4s}
 #theme-overlay.active{opacity:.15;transform:scale(3)}
-
-/* SCROLL BAR */
-#scroll-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--a3),var(--a2));width:0%;z-index:9999;box-shadow:0 0 8px var(--glow)}
-
-/* LOADER */
 #loader{position:fixed;inset:0;background:var(--bg3);z-index:9998;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity .8s,visibility .8s}
 #loader.hide{opacity:0;visibility:hidden}
 .ld-logo{font-family:'Syne',sans-serif;font-size:4rem;font-weight:800;background:linear-gradient(135deg,var(--a3),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .ld-ring{width:56px;height:56px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--a);animation:spin .9s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ld-txt{font-size:12px;color:var(--muted);letter-spacing:.12em}
-
-/* CANVAS LAYERS */
 canvas#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35}
 #trail-canvas{position:fixed;inset:0;z-index:1;pointer-events:none}
 #snow-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.6;display:none}
 #confetti-canvas{position:fixed;inset:0;z-index:9997;pointer-events:none}
 .wrap{position:relative;z-index:2}
-
-/* CURSOR */
 #cur{position:fixed;width:8px;height:8px;background:var(--a);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 10px var(--a),0 0 20px var(--glow)}
 #cur-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(0,212,200,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s}
-
-/* WA FLOAT */
 #wa-float{position:fixed;bottom:6rem;right:2.5rem;width:50px;height:50px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;z-index:90;color:#fff;font-size:24px;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,.4);animation:wa-pulse 2s infinite}
 @keyframes wa-pulse{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,.4)}50%{box-shadow:0 4px 28px rgba(37,211,102,.7)}}
-
-/* NAV */
+/* CHATBOT */
+#chat-btn{position:fixed;bottom:2.5rem;left:2.5rem;width:50px;height:50px;background:linear-gradient(135deg,var(--a3),var(--a2));border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;z-index:90;color:#0d1a1c;font-size:22px;border:none;box-shadow:0 4px 16px var(--glow);animation:chat-pulse 3s infinite}
+@keyframes chat-pulse{0%,100%{box-shadow:0 4px 16px var(--glow)}50%{box-shadow:0 4px 28px var(--glow)}}
+#chat-box{position:fixed;bottom:6rem;left:2.5rem;width:320px;background:var(--bg2);box-shadow:8px 8px 24px var(--nm-dark),-4px -4px 16px var(--nm-light);border-radius:20px;z-index:91;display:none;flex-direction:column;overflow:hidden;border:.5px solid var(--border)}
+#chat-box.open{display:flex}
+#chat-header{padding:1rem 1.25rem;background:linear-gradient(135deg,var(--a2),var(--a));color:#0d1a1c;display:flex;align-items:center;justify-content:space-between}
+#chat-header-left{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px}
+#chat-close{background:none;border:none;color:#0d1a1c;cursor:none;font-size:18px}
+#chat-msgs{height:240px;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:8px}
+.chat-msg{max-width:85%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.5}
+.chat-msg.bot{background:var(--bg);box-shadow:2px 2px 6px var(--nm-dark),-1px -1px 4px var(--nm-light);color:var(--text);align-self:flex-start;border-radius:4px 12px 12px 12px}
+.chat-msg.user{background:linear-gradient(135deg,var(--a3),var(--a2));color:#0d1a1c;align-self:flex-end;border-radius:12px 4px 12px 12px;font-weight:500}
+.chat-typing{display:flex;gap:4px;align-items:center;padding:8px 12px}
+.chat-typing span{width:6px;height:6px;background:var(--muted);border-radius:50%;animation:typing .8s infinite}
+.chat-typing span:nth-child(2){animation-delay:.15s}
+.chat-typing span:nth-child(3){animation-delay:.3s}
+@keyframes typing{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+#chat-input-row{display:flex;gap:8px;padding:.75rem 1rem;border-top:.5px solid var(--border)}
+#chat-input{flex:1;background:var(--bg);box-shadow:inset 2px 2px 6px var(--nm-dark),inset -1px -1px 4px var(--nm-light);border:none;border-radius:100px;padding:8px 14px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none}
+#chat-send{background:linear-gradient(135deg,var(--a3),var(--a2));border:none;border-radius:100px;padding:8px 14px;color:#0d1a1c;cursor:none;font-size:14px}
+/* OPEN TO WORK BANNER */
+.otw-banner{max-width:820px;margin:0 auto;padding:0 2.5rem 1.5rem}
+.otw-card{background:var(--bg2);box-shadow:6px 6px 14px var(--nm-dark),-4px -4px 10px var(--nm-light);border-radius:16px;padding:1.25rem 1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border:.5px solid var(--border)}
+.otw-left{display:flex;align-items:center;gap:12px}
+.otw-dot{width:10px;height:10px;background:#22c55e;border-radius:50%;box-shadow:0 0 8px #22c55e;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.otw-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text)}
+.otw-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.otw-tags{display:flex;gap:8px;flex-wrap:wrap}
+.otw-tag{font-size:11px;padding:4px 12px;background:var(--bg);box-shadow:inset 2px 2px 5px var(--nm-dark),inset -1px -1px 4px var(--nm-light);border-radius:100px;color:var(--a);font-weight:600}
+/* COLOR PICKER */
+.color-picker{display:flex;gap:8px;align-items:center}
+.color-dot{width:20px;height:20px;border-radius:50%;cursor:none;border:2px solid transparent;transition:all .2s}
+.color-dot:hover,.color-dot.active{border-color:var(--text);transform:scale(1.2)}
 nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2.5rem;background:var(--navbg);backdrop-filter:blur(20px);border-bottom:.5px solid var(--border);transition:background .4s}
 .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;background:linear-gradient(135deg,var(--a3),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .nav-right{display:flex;align-items:center;gap:8px}
@@ -66,19 +78,16 @@ nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;
 .nav-links a.active,.nav-links a:hover{color:var(--a);background:var(--glow2)}
 .nb{background:var(--bg2);box-shadow:3px 3px 8px var(--nm-dark),-2px -2px 6px var(--nm-light);border:none;border-radius:100px;padding:7px 13px;cursor:none;font-size:13px;color:var(--muted);transition:all .2s;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif}
 .nb:hover,.nb.on{color:var(--a);box-shadow:inset 2px 2px 6px var(--nm-dark),inset -2px -2px 5px var(--nm-light)}
-
-/* HERO */
 .hero{padding:6rem 2.5rem 4rem;max-width:820px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
 .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;border-radius:100px;margin-bottom:1.75rem;font-size:12px;color:var(--a);letter-spacing:.04em;background:var(--bg2);box-shadow:3px 3px 8px var(--nm-dark),-2px -2px 6px var(--nm-light)}
 .dot{width:7px;height:7px;background:var(--a);border-radius:50%;animation:blink 2s infinite;box-shadow:0 0 6px var(--a)}
-@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
 h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,4.5vw,3rem);font-weight:800;line-height:1.08;letter-spacing:-1.5px;color:var(--text);margin-bottom:1.1rem}
 .glitch{position:relative;display:inline-block}
 .glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .glitch::before{background:linear-gradient(135deg,#ff00ea,#00eaff);-webkit-background-clip:text;animation:glitch1 4s infinite;clip-path:polygon(0 0,100% 0,100% 45%,0 45%)}
 .glitch::after{background:linear-gradient(135deg,#00ff9d,#ff6b00);-webkit-background-clip:text;animation:glitch2 4s infinite;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%)}
-@keyframes glitch1{0%,88%,100%{transform:translate(0)}90%{transform:translate(-3px,1px)}92%{transform:translate(3px,-1px)}94%{transform:translate(-2px,2px)}}
-@keyframes glitch2{0%,88%,100%{transform:translate(0)}91%{transform:translate(3px,1px)}93%{transform:translate(-3px,-1px)}95%{transform:translate(2px,-2px)}}
+@keyframes glitch1{0%,88%,100%{transform:translate(0)}90%{transform:translate(-3px,1px)}92%{transform:translate(3px,-1px)}}
+@keyframes glitch2{0%,88%,100%{transform:translate(0)}91%{transform:translate(3px,1px)}93%{transform:translate(-3px,-1px)}}
 h1 em{font-style:normal;background:linear-gradient(135deg,var(--a3),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 #typing-text{border-right:2px solid var(--a);padding-right:3px;animation:cblink .7s infinite}
 @keyframes cblink{0%,100%{border-color:var(--a)}50%{border-color:transparent}}
@@ -93,32 +102,42 @@ h1 em{font-style:normal;background:linear-gradient(135deg,var(--a3),var(--a2));-
 .share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:100px;font-size:12px;cursor:none;transition:all .2s;text-decoration:none;border:none;font-weight:500;background:var(--bg2);color:var(--muted);box-shadow:3px 3px 8px var(--nm-dark),-2px -2px 6px var(--nm-light);font-family:'DM Sans',sans-serif}
 .share-btn:hover{box-shadow:inset 2px 2px 6px var(--nm-dark),inset -2px -2px 5px var(--nm-light)}
 .share-wa:hover{color:#25d366}.share-li:hover{color:#0077b5}
-
-/* AVATAR */
 .avatar-wrap{flex-shrink:0}
 .avatar{width:155px;height:155px;border-radius:50%;background:linear-gradient(135deg,var(--a2),#004d55,#0d1a1c);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:44px;font-weight:800;color:#fff;position:relative;box-shadow:8px 8px 20px var(--nm-dark),-5px -5px 16px var(--nm-light),0 0 35px var(--glow);overflow:hidden}
 .av-ring{position:absolute;inset:-10px;border-radius:50%;border:1px dashed rgba(0,212,200,.25);animation:spin 12s linear infinite;z-index:2}
 .av-ring2{position:absolute;inset:-20px;border-radius:50%;border:.5px solid rgba(0,212,200,.1);animation:spin 20s linear infinite reverse;z-index:2}
 .av-glow{position:absolute;inset:-4px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,200,.12),transparent 70%);z-index:2}
-
-/* LIVE COUNTER */
 .live-counter{max-width:820px;margin:0 auto;padding:0 2.5rem 1rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .lc-item{display:flex;align-items:center;gap:8px;background:var(--bg2);box-shadow:3px 3px 8px var(--nm-dark),-2px -2px 6px var(--nm-light);border-radius:100px;padding:7px 16px;font-size:13px;color:var(--muted)}
 .lc-val{font-family:'Syne',sans-serif;font-weight:700;color:var(--a);font-size:14px}
-
-/* STATS */
 .stats-bar{max-width:820px;margin:0 auto 1rem;padding:0 2.5rem}
 .stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .stat-item{padding:1.5rem 1rem;text-align:center;background:var(--bg2);box-shadow:6px 6px 14px var(--nm-dark),-4px -4px 10px var(--nm-light);border-radius:16px;transition:all .3s}
 .stat-item:hover{box-shadow:8px 8px 18px var(--nm-dark),-5px -5px 12px var(--nm-light),0 0 20px var(--glow2)}
 .stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--a3),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
-
-/* SECTION */
 section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px solid var(--border)}
 .sec-label{font-size:11px;letter-spacing:.14em;color:var(--a);text-transform:uppercase;margin-bottom:.5rem;font-weight:600}
 .sec-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:2rem}
-
+/* TESTIMONI */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.testi-card{padding:1.5rem;background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:18px;transition:all .3s;position:relative}
+.testi-card:hover{box-shadow:7px 7px 16px var(--nm-dark),-4px -4px 10px var(--nm-light),0 0 20px var(--glow2);transform:translateY(-3px)}
+.testi-quote{font-size:3rem;color:var(--glow2);font-family:'Syne',sans-serif;font-weight:800;line-height:1;margin-bottom:.5rem}
+.testi-text{font-size:13px;color:var(--muted);line-height:1.7;font-style:italic;margin-bottom:1rem}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--a2),var(--a));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#0d1a1c;flex-shrink:0}
+.testi-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text)}
+.testi-role{font-size:11px;color:var(--muted)}
+.testi-stars{color:#f59e0b;font-size:12px;margin-bottom:.75rem}
+/* KARTU NAMA */
+.card-preview{background:linear-gradient(135deg,var(--a2),#004d55);border-radius:20px;padding:2rem;max-width:380px;margin:0 auto 1.5rem;box-shadow:8px 8px 24px var(--nm-dark),-4px -4px 16px var(--nm-light);position:relative;overflow:hidden}
+.card-preview::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.05)}
+.card-preview::after{content:'';position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.05)}
+.card-name{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;margin-bottom:.25rem}
+.card-role{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:1.25rem}
+.card-info{display:flex;flex-direction:column;gap:6px}
+.card-info-item{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.8)}
 /* ABOUT */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .about-card{padding:1.25rem 1.5rem;background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:16px}
@@ -127,48 +146,17 @@ section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px 
 .fun-facts{display:flex;flex-direction:column;gap:8px}
 .fun-fact{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.5}
 .fun-fact-dot{width:6px;height:6px;background:var(--a);border-radius:50%;flex-shrink:0;margin-top:6px}
-
-/* TECH STACK */
 .tech-stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:14px}
 .ts-card{padding:1.25rem .75rem;background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:14px;transition:all .3s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
 .ts-card:hover{box-shadow:7px 7px 16px var(--nm-dark),-4px -4px 10px var(--nm-light),0 0 18px var(--glow2);transform:translateY(-4px)}
 .ts-icon{font-size:28px;line-height:1}
 .ts-name{font-size:12px;color:var(--muted);font-weight:500}
-
-/* SERVICES */
 .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
 .service-card{padding:1.75rem 1.5rem;background:var(--bg2);box-shadow:6px 6px 14px var(--nm-dark),-4px -4px 10px var(--nm-light);border-radius:18px;transition:all .3s;text-align:center}
 .service-card:hover{box-shadow:8px 8px 20px var(--nm-dark),-5px -5px 14px var(--nm-light),0 0 24px var(--glow2);transform:translateY(-4px)}
 .service-icon{width:56px;height:56px;background:var(--bg);box-shadow:inset 4px 4px 10px var(--nm-dark),inset -3px -3px 8px var(--nm-light);border-radius:16px;display:flex;align-items:center;justify-content:center;color:var(--a);font-size:26px;margin:0 auto 1rem}
 .service-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:.5rem}
 .service-desc{font-size:12px;color:var(--muted);line-height:1.65}
-
-/* MOOD TRACKER */
-.mood-wrap{background:var(--bg2);box-shadow:6px 6px 16px var(--nm-dark),-4px -4px 12px var(--nm-light);border-radius:20px;padding:2rem;text-align:center}
-.mood-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:.5rem}
-.mood-sub{font-size:13px;color:var(--muted);margin-bottom:1.5rem}
-.mood-emojis{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:1.5rem}
-.mood-btn{font-size:2rem;background:var(--bg);box-shadow:4px 4px 10px var(--nm-dark),-3px -3px 8px var(--nm-light);border:none;border-radius:16px;padding:12px 16px;cursor:none;transition:all .2s;position:relative}
-.mood-btn:hover{box-shadow:inset 3px 3px 8px var(--nm-dark),inset -2px -2px 6px var(--nm-light);transform:scale(1.1)}
-.mood-btn.selected{box-shadow:0 0 0 2px var(--a),inset 3px 3px 8px var(--nm-dark)}
-.mood-results{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.mood-result-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
-.mood-bar-wrap{width:80px;height:4px;background:var(--bg);box-shadow:inset 2px 2px 4px var(--nm-dark);border-radius:10px;overflow:hidden}
-.mood-bar-fill{height:100%;background:linear-gradient(90deg,var(--a3),var(--a2));border-radius:10px;transition:width .8s ease}
-
-/* MINI GAME */
-.game-wrap{background:var(--bg2);box-shadow:6px 6px 16px var(--nm-dark),-4px -4px 12px var(--nm-light);border-radius:20px;padding:2rem;text-align:center}
-.game-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:.5rem}
-.game-sub{font-size:13px;color:var(--muted);margin-bottom:1.5rem}
-.game-score{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--a);margin-bottom:1rem}
-.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:280px;margin:0 auto 1rem}
-.game-btn{background:var(--bg);box-shadow:4px 4px 10px var(--nm-dark),-3px -3px 8px var(--nm-light);border:none;border-radius:12px;padding:1rem;font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text);cursor:none;transition:all .15s}
-.game-btn:hover{box-shadow:inset 3px 3px 8px var(--nm-dark),inset -2px -2px 6px var(--nm-light);color:var(--a)}
-.game-btn.hit{background:var(--a);color:#0d1a1c;box-shadow:0 0 16px var(--glow)}
-.game-btn.miss{background:#f87171;color:#fff}
-.game-target{font-size:1.1rem;color:var(--muted);margin-bottom:.75rem}
-
-/* SKILLS */
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
 .skill-item{padding:14px 16px;display:flex;flex-direction:column;gap:8px;background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:14px;transition:all .3s}
 .skill-item:hover{box-shadow:7px 7px 16px var(--nm-dark),-4px -4px 10px var(--nm-light),0 0 18px var(--glow2);transform:translateY(-3px)}
@@ -177,8 +165,6 @@ section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px 
 .skill-pct{font-size:11px;color:var(--a);font-weight:700}
 .skill-bar{height:4px;background:var(--bg);box-shadow:inset 2px 2px 5px var(--nm-dark),inset -1px -1px 4px var(--nm-light);border-radius:10px;overflow:hidden}
 .skill-fill{height:100%;background:linear-gradient(90deg,var(--a3),var(--a2));border-radius:10px;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
-
-/* LEARNING */
 .learning-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
 .learning-card{padding:1.25rem 1.5rem;background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:16px;transition:all .3s;display:flex;flex-direction:column;gap:10px}
 .learning-card:hover{box-shadow:7px 7px 16px var(--nm-dark),-4px -4px 10px var(--nm-light),0 0 20px var(--glow2);transform:translateY(-3px)}
@@ -190,8 +176,6 @@ section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px 
 .lc-bar{flex:1;height:3px;background:var(--bg);box-shadow:inset 2px 2px 4px var(--nm-dark),inset -1px -1px 3px var(--nm-light);border-radius:10px;overflow:hidden}
 .lc-fill{height:100%;background:linear-gradient(90deg,var(--a3),var(--a2));border-radius:10px;width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
 .lc-pct{font-size:11px;color:var(--a);font-weight:700;white-space:nowrap}
-
-/* TIMELINE */
 .timeline{position:relative;padding-left:2.25rem}
 .timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:1.5px;background:linear-gradient(to bottom,var(--a),transparent)}
 .tl-item{position:relative;margin-bottom:2rem}
@@ -200,8 +184,6 @@ section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px 
 .tl-date{font-size:11px;color:var(--a);margin-bottom:4px;font-weight:600;letter-spacing:.05em}
 .tl-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px}
 .tl-desc{font-size:13px;color:var(--muted);line-height:1.65}
-
-/* CERT */
 .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
 .cert-card{padding:1.25rem 1.5rem;background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:16px;transition:all .3s;display:flex;gap:12px;align-items:flex-start}
 .cert-card:hover{box-shadow:7px 7px 16px var(--nm-dark),-4px -4px 10px var(--nm-light),0 0 20px var(--glow2);transform:translateY(-2px)}
@@ -209,17 +191,6 @@ section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px 
 .cert-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
 .cert-issuer{font-size:12px;color:var(--muted)}
 .cert-year{font-size:11px;color:var(--a);font-weight:600;margin-top:4px}
-
-/* BLOG */
-.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.blog-card{padding:1.5rem;background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:16px;transition:all .3s;cursor:none}
-.blog-card:hover{box-shadow:7px 7px 16px var(--nm-dark),-4px -4px 10px var(--nm-light),0 0 20px var(--glow2);transform:translateY(-3px)}
-.blog-tag{font-size:10px;color:var(--a);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
-.blog-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:.5rem;line-height:1.4}
-.blog-desc{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:.75rem}
-.blog-date{font-size:11px;color:var(--muted)}
-
-/* PROJECTS */
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:16px}
 .proj-card{padding:1.75rem;background:var(--bg2);box-shadow:6px 6px 16px var(--nm-dark),-4px -4px 12px var(--nm-light);border-radius:20px;transition:all .3s;transform-style:preserve-3d}
 .proj-card:hover{box-shadow:10px 10px 22px var(--nm-dark),-6px -6px 16px var(--nm-light),0 0 30px var(--glow2)}
@@ -229,25 +200,37 @@ section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px 
 .proj-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:1.1rem}
 .tech-row{display:flex;gap:7px;flex-wrap:wrap}
 .tech{font-size:11px;padding:4px 11px;background:var(--bg);box-shadow:inset 2px 2px 4px var(--nm-dark),inset -1px -1px 3px var(--nm-light);border-radius:8px;color:var(--muted)}
-
-/* FAQ */
+.mood-wrap{background:var(--bg2);box-shadow:6px 6px 16px var(--nm-dark),-4px -4px 12px var(--nm-light);border-radius:20px;padding:2rem;text-align:center}
+.mood-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:.5rem}
+.mood-sub{font-size:13px;color:var(--muted);margin-bottom:1.5rem}
+.mood-emojis{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:1.5rem}
+.mood-btn{font-size:2rem;background:var(--bg);box-shadow:4px 4px 10px var(--nm-dark),-3px -3px 8px var(--nm-light);border:none;border-radius:16px;padding:12px 16px;cursor:none;transition:all .2s}
+.mood-btn:hover{box-shadow:inset 3px 3px 8px var(--nm-dark),inset -2px -2px 6px var(--nm-light);transform:scale(1.1)}
+.mood-btn.selected{box-shadow:0 0 0 2px var(--a),inset 3px 3px 8px var(--nm-dark)}
+.mood-results{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.mood-result-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.mood-bar-wrap{width:80px;height:4px;background:var(--bg);box-shadow:inset 2px 2px 4px var(--nm-dark);border-radius:10px;overflow:hidden}
+.mood-bar-fill{height:100%;background:linear-gradient(90deg,var(--a3),var(--a2));border-radius:10px;transition:width .8s ease}
+.game-wrap{background:var(--bg2);box-shadow:6px 6px 16px var(--nm-dark),-4px -4px 12px var(--nm-light);border-radius:20px;padding:2rem;text-align:center}
+.game-score{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--a);margin-bottom:1rem}
+.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:280px;margin:0 auto 1rem}
+.game-btn{background:var(--bg);box-shadow:4px 4px 10px var(--nm-dark),-3px -3px 8px var(--nm-light);border:none;border-radius:12px;padding:1rem;font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text);cursor:none;transition:all .15s}
+.game-btn:hover{box-shadow:inset 3px 3px 8px var(--nm-dark),inset -2px -2px 6px var(--nm-light);color:var(--a)}
+.game-btn.hit{background:var(--a);color:#0d1a1c;box-shadow:0 0 16px var(--glow)}
+.game-btn.miss{background:#f87171;color:#fff}
 .faq-list{display:flex;flex-direction:column;gap:12px}
 .faq-item{background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:14px;overflow:hidden}
 .faq-q{padding:1.1rem 1.5rem;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);cursor:none;display:flex;justify-content:space-between;align-items:center;transition:color .2s}
 .faq-q:hover{color:var(--a)}
-.faq-q i{transition:transform .3s;color:var(--a);font-size:16px}
+.faq-q i{transition:transform .3s;color:var(--a)}
 .faq-q.open i{transform:rotate(45deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
 .faq-a.open{max-height:200px;padding:0 1.5rem 1.1rem}
 .faq-a p{font-size:13px;color:var(--muted);line-height:1.7}
-
-/* QUOTE */
 .quote-card{padding:2rem 2.25rem;background:var(--bg2);box-shadow:6px 6px 16px var(--nm-dark),-4px -4px 12px var(--nm-light);border-radius:20px;position:relative;overflow:hidden}
 .quote-card::before{content:'"';position:absolute;top:-10px;left:16px;font-size:8rem;font-family:'Syne',sans-serif;font-weight:800;color:var(--glow2);line-height:1;pointer-events:none}
 .quote-text{font-size:15px;color:var(--muted);line-height:1.9;font-style:italic;margin-bottom:.9rem;position:relative}
 .quote-author{font-size:13px;color:var(--a);font-weight:600}
-
-/* FORM */
 .form-wrap{background:var(--bg2);box-shadow:6px 6px 16px var(--nm-dark),-4px -4px 12px var(--nm-light);border-radius:20px;padding:2rem;margin-top:1.5rem}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-group{display:flex;flex-direction:column;gap:7px}
@@ -257,16 +240,12 @@ section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px 
 .form-group input:focus,.form-group textarea:focus{box-shadow:inset 5px 5px 12px var(--nm-dark),inset -3px -3px 8px var(--nm-light),0 0 0 1.5px var(--a)}
 .form-group textarea{height:120px}
 .form-status{font-size:13px;margin-top:.75rem;min-height:20px}
-
-/* CONTACT */
 .contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:2rem}
 .cc{padding:1.1rem 1.25rem;text-decoration:none;transition:all .25s;display:flex;align-items:center;gap:13px;cursor:none;background:var(--bg2);box-shadow:5px 5px 12px var(--nm-dark),-3px -3px 8px var(--nm-light);border-radius:15px}
 .cc:hover{box-shadow:7px 7px 16px var(--nm-dark),-4px -4px 10px var(--nm-light),0 0 18px var(--glow2);transform:translateY(-2px)}
 .cc-icon{width:40px;height:40px;background:var(--bg);box-shadow:inset 3px 3px 7px var(--nm-dark),inset -2px -2px 5px var(--nm-light);border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--a);font-size:19px;flex-shrink:0}
 .cc-lbl{font-size:11px;color:var(--muted);margin-bottom:3px}
 .cc-val{font-size:13px;color:var(--text);font-weight:500}
-
-/* MISC */
 .copy-toast{position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--a3),var(--a2));color:#0d1a1c;padding:11px 26px;border-radius:100px;font-size:13px;font-weight:600;opacity:0;transition:opacity .3s;z-index:9999;pointer-events:none;box-shadow:0 8px 24px var(--glow)}
 .copy-toast.show{opacity:1}
 .visitor-bar{max-width:820px;margin:0 auto;padding:1.75rem 2.5rem;border-top:.5px solid var(--border);display:flex;align-items:center;gap:12px}
@@ -278,7 +257,7 @@ section.sec{max-width:820px;margin:0 auto;padding:3.5rem 2.5rem;border-top:.5px 
 footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-size:12px;color:var(--muted);max-width:820px;margin:0 auto}
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
 .revealed{opacity:1;transform:none}
-@media print{#loader,#cur,#cur-ring,canvas,nav,#scroll-top,#wa-float,#scroll-bar,.share-row,.cta-row .btn-g,#theme-overlay{display:none!important}body{cursor:auto;background:#fff;color:#000}}
+@media print{#loader,#cur,#cur-ring,canvas,nav,#scroll-top,#wa-float,#chat-btn,#chat-box,#scroll-bar,#theme-overlay,.share-row,.cta-row .btn-g{display:none!important}body{cursor:auto;background:#fff;color:#000}}
 @media(max-width:640px){body{cursor:auto}#cur,#cur-ring,#trail-canvas{display:none}.nav-links{display:none}.hero{grid-template-columns:1fr}.avatar-wrap{display:none}.proj-grid{grid-template-columns:1fr}.stats-inner{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}.about-grid{grid-template-columns:1fr}.tech-stack-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
@@ -292,6 +271,21 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
 <div class="copy-toast" id="toast">✓ Email disalin!</div>
 <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="ti ti-arrow-up"></i></button>
 <a id="wa-float" href="https://wa.me/6289672762850" target="_blank"><i class="ti ti-brand-whatsapp"></i></a>
+
+<!-- CHATBOT -->
+<button id="chat-btn" onclick="toggleChat()"><i class="ti ti-robot"></i></button>
+<div id="chat-box">
+  <div id="chat-header">
+    <div id="chat-header-left"><i class="ti ti-robot"></i> Tanya tentang Dhavi</div>
+    <button id="chat-close" onclick="toggleChat()"><i class="ti ti-x"></i></button>
+  </div>
+  <div id="chat-msgs"></div>
+  <div id="chat-input-row">
+    <input id="chat-input" placeholder="Tanya sesuatu..." onkeydown="if(event.key==='Enter')sendChat()"/>
+    <button id="chat-send" onclick="sendChat()"><i class="ti ti-send"></i></button>
+  </div>
+</div>
+
 <canvas id="particles"></canvas>
 <canvas id="trail-canvas"></canvas>
 
@@ -305,15 +299,42 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
       <a href="#skills" class="nav-link" data-id="skills" data-id-en="Skills" data-id-id="Skills">Skills</a>
       <a href="#timeline" class="nav-link" data-id="timeline" data-id-en="Journey" data-id-id="Timeline">Timeline</a>
       <a href="#proyek" class="nav-link" data-id="proyek" data-id-en="Projects" data-id-id="Proyek">Proyek</a>
-      <a href="#game" class="nav-link" data-id="game" data-id-en="Game" data-id-id="Game">Game</a>
+      <a href="#testi" class="nav-link" data-id="testi" data-id-en="Reviews" data-id-id="Testimoni">Testimoni</a>
       <a href="#kontak" class="nav-link" data-id="kontak" data-id-en="Contact" data-id-id="Kontak">Kontak</a>
     </div>
-    <button class="nb" onclick="toggleSnow()" id="snow-btn" title="Toggle Snow"><i class="ti ti-snowflake"></i></button>
+    <!-- COLOR PICKER -->
+    <div class="color-picker">
+      <div class="color-dot active" style="background:#00d4c8" onclick="setColor('cyan',this)" title="Cyan"></div>
+      <div class="color-dot" style="background:#a855f7" onclick="setColor('purple',this)" title="Purple"></div>
+      <div class="color-dot" style="background:#f97316" onclick="setColor('orange',this)" title="Orange"></div>
+      <div class="color-dot" style="background:#22c55e" onclick="setColor('green',this)" title="Green"></div>
+      <div class="color-dot" style="background:#ec4899" onclick="setColor('pink',this)" title="Pink"></div>
+    </div>
+    <button class="nb" onclick="toggleSnow()" id="snow-btn" title="Snow"><i class="ti ti-snowflake"></i></button>
     <button class="nb" onclick="toggleLang()" id="lang-btn"><i class="ti ti-language"></i> ID</button>
     <button class="nb" onclick="toggleMusic()" id="music-btn"><i class="ti ti-music"></i></button>
     <button class="nb" onclick="toggleTheme()" id="theme-btn"><i class="ti ti-moon"></i></button>
   </div>
 </nav>
+
+<!-- OPEN TO WORK BANNER -->
+<div class="otw-banner">
+  <div class="otw-card">
+    <div class="otw-left">
+      <div class="otw-dot"></div>
+      <div>
+        <div class="otw-title">Open to Work & Kolaborasi 🚀</div>
+        <div class="otw-sub">Tersedia untuk freelance, magang, dan proyek kolaborasi</div>
+      </div>
+    </div>
+    <div class="otw-tags">
+      <span class="otw-tag">Freelance</span>
+      <span class="otw-tag">Web Dev</span>
+      <span class="otw-tag">AI Project</span>
+      <span class="otw-tag">Magang</span>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="hero">
@@ -324,6 +345,7 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
     <div class="cta-row">
       <a href="mailto:dhaviafif@gmail.com" class="btn btn-p"><i class="ti ti-mail"></i><span data-id="btn-contact">Hubungi Saya</span></a>
       <a href="cv-dhavi.pdf" download class="btn btn-g"><i class="ti ti-download"></i><span data-id="btn-cv">Download CV</span></a>
+      <button class="btn btn-g" onclick="downloadCard()"><i class="ti ti-id-badge"></i> Kartu Nama</button>
       <button class="btn btn-g" onclick="window.print()"><i class="ti ti-printer"></i> Save PDF</button>
     </div>
     <div class="share-row">
@@ -339,8 +361,8 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
 <!-- LIVE COUNTER -->
 <div class="live-counter reveal">
   <div class="lc-item"><i class="ti ti-clock" style="color:var(--a)"></i> Jam ngoding hari ini: <span class="lc-val" id="hours-today">0j 0m</span></div>
-  <div class="lc-item"><i class="ti ti-calendar" style="color:var(--a)"></i> Hari belajar coding: <span class="lc-val" id="days-coding">0</span> hari</div>
-  <div class="lc-item"><i class="ti ti-code" style="color:var(--a)"></i> Baris kode ditulis: <span class="lc-val" id="lines-code">0</span></div>
+  <div class="lc-item"><i class="ti ti-calendar" style="color:var(--a)"></i> Hari belajar: <span class="lc-val" id="days-coding">0</span> hari</div>
+  <div class="lc-item"><i class="ti ti-code" style="color:var(--a)"></i> Baris kode: <span class="lc-val" id="lines-code">0</span></div>
 </div>
 
 <!-- STATS -->
@@ -358,15 +380,15 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   <div class="sec-label">Tentang Saya</div>
   <div class="sec-title">Lebih Dekat dengan Dhavi</div>
   <div class="about-grid">
-    <div class="about-card"><div class="about-card-title"><i class="ti ti-user"></i> Kepribadian</div><div class="about-card-text">Mahasiswa Teknik Informatika yang antusias, suka belajar hal baru, dan selalu ingin mencoba teknologi terkini. Percaya bahwa kode yang baik bukan hanya yang bekerja, tapi yang mudah dipahami.</div></div>
-    <div class="about-card"><div class="about-card-title"><i class="ti ti-heart"></i> Hobi</div><div class="about-card-text fun-facts"><div class="fun-fact"><div class="fun-fact-dot"></div>Coding dan eksplorasi teknologi baru</div><div class="fun-fact"><div class="fun-fact-dot"></div>Belajar AI dan Machine Learning</div><div class="fun-fact"><div class="fun-fact-dot"></div>Mendengarkan musik saat ngoding</div><div class="fun-fact"><div class="fun-fact-dot"></div>Bermain game dan menonton film</div></div></div>
-    <div class="about-card"><div class="about-card-title"><i class="ti ti-stars"></i> Fun Facts</div><div class="about-card-text fun-facts"><div class="fun-fact"><div class="fun-fact-dot"></div>Pernah debug bug 3 jam — ternyata titik koma hilang 😅</div><div class="fun-fact"><div class="fun-fact-dot"></div>Lebih suka dark mode di mana saja</div><div class="fun-fact"><div class="fun-fact-dot"></div>Pertama kali deploy app terasa seperti sihir ✨</div></div></div>
-    <div class="about-card"><div class="about-card-title"><i class="ti ti-target"></i> Goals</div><div class="about-card-text fun-facts"><div class="fun-fact"><div class="fun-fact-dot"></div>Menjadi Full Stack Developer handal</div><div class="fun-fact"><div class="fun-fact-dot"></div>Membangun produk AI yang berguna</div><div class="fun-fact"><div class="fun-fact-dot"></div>Berkontribusi di open source project</div></div></div>
+    <div class="about-card"><div class="about-card-title"><i class="ti ti-user"></i> Kepribadian</div><div class="about-card-text">Mahasiswa Teknik Informatika yang antusias dan selalu ingin mencoba teknologi terkini. Percaya kode yang baik bukan hanya yang bekerja, tapi yang mudah dipahami.</div></div>
+    <div class="about-card"><div class="about-card-title"><i class="ti ti-heart"></i> Hobi</div><div class="about-card-text fun-facts"><div class="fun-fact"><div class="fun-fact-dot"></div>Coding dan eksplorasi teknologi</div><div class="fun-fact"><div class="fun-fact-dot"></div>Belajar AI dan Machine Learning</div><div class="fun-fact"><div class="fun-fact-dot"></div>Mendengarkan musik saat ngoding</div><div class="fun-fact"><div class="fun-fact-dot"></div>Bermain game dan menonton film</div></div></div>
+    <div class="about-card"><div class="about-card-title"><i class="ti ti-stars"></i> Fun Facts</div><div class="about-card-text fun-facts"><div class="fun-fact"><div class="fun-fact-dot"></div>Pernah debug bug 3 jam — titik koma hilang 😅</div><div class="fun-fact"><div class="fun-fact-dot"></div>Lebih suka dark mode di mana saja</div><div class="fun-fact"><div class="fun-fact-dot"></div>Deploy pertama terasa seperti sihir ✨</div></div></div>
+    <div class="about-card"><div class="about-card-title"><i class="ti ti-target"></i> Goals</div><div class="about-card-text fun-facts"><div class="fun-fact"><div class="fun-fact-dot"></div>Menjadi Full Stack Developer handal</div><div class="fun-fact"><div class="fun-fact-dot"></div>Membangun produk AI yang berguna</div><div class="fun-fact"><div class="fun-fact-dot"></div>Berkontribusi di open source</div></div></div>
   </div>
 </section>
 
 <!-- TECH STACK -->
-<section class="sec reveal" id="techstack">
+<section class="sec reveal">
   <div class="sec-label">Teknologi</div>
   <div class="sec-title">Tech Stack Saya</div>
   <div class="tech-stack-grid">
@@ -390,10 +412,10 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   <div class="sec-label">Layanan</div>
   <div class="sec-title">Apa yang Bisa Saya Bantu</div>
   <div class="services-grid">
-    <div class="service-card"><div class="service-icon"><i class="ti ti-world"></i></div><div class="service-name">Web Development</div><div class="service-desc">Website modern, responsif, dan menarik dengan HTML, CSS, JavaScript, dan PHP.</div></div>
-    <div class="service-card"><div class="service-icon"><i class="ti ti-robot"></i></div><div class="service-name">AI Integration</div><div class="service-desc">Integrasi AI dan LLM ke dalam aplikasi web berbasis Groq API atau OpenAI.</div></div>
-    <div class="service-card"><div class="service-icon"><i class="ti ti-database"></i></div><div class="service-name">Database Design</div><div class="service-desc">Rancangan database MySQL yang efisien untuk aplikasi web full stack.</div></div>
-    <div class="service-card"><div class="service-icon"><i class="ti ti-api"></i></div><div class="service-name">REST API</div><div class="service-desc">Backend API menggunakan FastAPI atau PHP yang cepat dan terdokumentasi.</div></div>
+    <div class="service-card"><div class="service-icon"><i class="ti ti-world"></i></div><div class="service-name">Web Development</div><div class="service-desc">Website modern dan responsif dengan HTML, CSS, JavaScript, dan PHP.</div></div>
+    <div class="service-card"><div class="service-icon"><i class="ti ti-robot"></i></div><div class="service-name">AI Integration</div><div class="service-desc">Integrasi AI dan LLM ke aplikasi web berbasis Groq API atau OpenAI.</div></div>
+    <div class="service-card"><div class="service-icon"><i class="ti ti-database"></i></div><div class="service-name">Database Design</div><div class="service-desc">Rancangan database MySQL yang efisien untuk aplikasi full stack.</div></div>
+    <div class="service-card"><div class="service-icon"><i class="ti ti-api"></i></div><div class="service-name">REST API</div><div class="service-desc">Backend API cepat menggunakan FastAPI atau PHP.</div></div>
   </div>
 </section>
 
@@ -407,7 +429,7 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
     <div class="skill-item"><div class="skill-top"><span class="skill-name">Python</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-w="70"></div></div></div>
     <div class="skill-item"><div class="skill-top"><span class="skill-name">FastAPI</span><span class="skill-pct">65%</span></div><div class="skill-bar"><div class="skill-fill" data-w="65"></div></div></div>
     <div class="skill-item"><div class="skill-top"><span class="skill-name">C Language</span><span class="skill-pct">60%</span></div><div class="skill-bar"><div class="skill-fill" data-w="60"></div></div></div>
-    <div class="skill-item"><div class="skill-top"><span class="skill-name">SQL/Database</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-w="70"></div></div></div>
+    <div class="skill-item"><div class="skill-top"><span class="skill-name">SQL/DB</span><span class="skill-pct">70%</span></div><div class="skill-bar"><div class="skill-fill" data-w="70"></div></div></div>
     <div class="skill-item"><div class="skill-top"><span class="skill-name">REST API</span><span class="skill-pct">68%</span></div><div class="skill-bar"><div class="skill-fill" data-w="68"></div></div></div>
     <div class="skill-item"><div class="skill-top"><span class="skill-name">Git/GitHub</span><span class="skill-pct">75%</span></div><div class="skill-bar"><div class="skill-fill" data-w="75"></div></div></div>
     <div class="skill-item"><div class="skill-top"><span class="skill-name">Railway</span><span class="skill-pct">60%</span></div><div class="skill-bar"><div class="skill-fill" data-w="60"></div></div></div>
@@ -416,13 +438,13 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
 </section>
 
 <!-- LEARNING -->
-<section class="sec reveal" id="learning">
+<section class="sec reveal">
   <div class="sec-label">Sedang Dipelajari</div>
   <div class="sec-title">Currently Learning</div>
   <div class="learning-grid">
-    <div class="learning-card"><div class="lc-top"><div class="lc-icon"><i class="ti ti-brain"></i></div><div class="lc-name">Machine Learning</div></div><div class="lc-desc">Supervised & unsupervised learning, regresi, klasifikasi, dan neural network.</div><div class="lc-progress"><div class="lc-bar"><div class="lc-fill" data-w="35"></div></div><span class="lc-pct">35%</span></div></div>
-    <div class="learning-card"><div class="lc-top"><div class="lc-icon"><i class="ti ti-robot"></i></div><div class="lc-name">AI / Deep Learning</div></div><div class="lc-desc">LLM, prompt engineering, dan integrasi AI ke aplikasi web nyata.</div><div class="lc-progress"><div class="lc-bar"><div class="lc-fill" data-w="45"></div></div><span class="lc-pct">45%</span></div></div>
-    <div class="learning-card"><div class="lc-top"><div class="lc-icon"><i class="ti ti-chart-dots"></i></div><div class="lc-name">Data Science</div></div><div class="lc-desc">Analisis data dengan Python, Pandas, NumPy, dan Matplotlib.</div><div class="lc-progress"><div class="lc-bar"><div class="lc-fill" data-w="30"></div></div><span class="lc-pct">30%</span></div></div>
+    <div class="learning-card"><div class="lc-top"><div class="lc-icon"><i class="ti ti-brain"></i></div><div class="lc-name">Machine Learning</div></div><div class="lc-desc">Supervised & unsupervised learning, regresi, klasifikasi.</div><div class="lc-progress"><div class="lc-bar"><div class="lc-fill" data-w="35"></div></div><span class="lc-pct">35%</span></div></div>
+    <div class="learning-card"><div class="lc-top"><div class="lc-icon"><i class="ti ti-robot"></i></div><div class="lc-name">AI / Deep Learning</div></div><div class="lc-desc">LLM, prompt engineering, dan integrasi AI ke web.</div><div class="lc-progress"><div class="lc-bar"><div class="lc-fill" data-w="45"></div></div><span class="lc-pct">45%</span></div></div>
+    <div class="learning-card"><div class="lc-top"><div class="lc-icon"><i class="ti ti-chart-dots"></i></div><div class="lc-name">Data Science</div></div><div class="lc-desc">Python, Pandas, NumPy, dan Matplotlib.</div><div class="lc-progress"><div class="lc-bar"><div class="lc-fill" data-w="30"></div></div><span class="lc-pct">30%</span></div></div>
   </div>
 </section>
 
@@ -431,17 +453,17 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   <div class="sec-label">Perjalanan</div>
   <div class="sec-title">Timeline Belajar</div>
   <div class="timeline">
-    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025</div><div class="tl-title">Mulai Belajar Pemrograman</div><div class="tl-desc">Mengenal HTML, CSS, dan JavaScript pertama kali. Membuat halaman web sederhana dari nol.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025</div><div class="tl-title">Mulai Belajar Pemrograman</div><div class="tl-desc">Mengenal HTML, CSS, dan JavaScript. Membuat halaman web sederhana dari nol.</div></div>
     <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025</div><div class="tl-title">Masuk Universitas Stikubank</div><div class="tl-desc">Kuliah Teknik Informatika. Mempelajari algoritma, logika, dan matematika diskrit.</div></div>
-    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025</div><div class="tl-title">Belajar Python & Database</div><div class="tl-desc">Mendalami Python, SQL, dan membangun aplikasi web pertama dengan PHP & MySQL.</div></div>
-    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025</div><div class="tl-title">Membangun SIMRS & SiPustakaKu</div><div class="tl-desc">Dua aplikasi full stack pertama — sistem informasi rumah sakit dan perpustakaan.</div></div>
-    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2026</div><div class="tl-title">Meluncurkan SkripsiAI</div><div class="tl-desc">Membangun aplikasi AI dengan FastAPI dan Groq API, deploy ke cloud via Railway.</div></div>
-    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2026 — Sekarang</div><div class="tl-title">Terus Berkembang</div><div class="tl-desc">Memperdalam web development modern, Machine Learning, dan AI untuk solusi nyata.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025</div><div class="tl-title">Belajar Python & Database</div><div class="tl-desc">Mendalami Python, SQL, dan membangun aplikasi web dengan PHP & MySQL.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2025</div><div class="tl-title">Membangun SIMRS & SiPustakaKu</div><div class="tl-desc">Dua aplikasi full stack pertama — sistem rumah sakit dan perpustakaan.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2026</div><div class="tl-title">Meluncurkan SkripsiAI</div><div class="tl-desc">Membangun aplikasi AI dengan FastAPI dan Groq API, deploy ke Railway.</div></div>
+    <div class="tl-item"><div class="tl-dot"><div class="tl-inner"></div></div><div class="tl-date">2026 — Sekarang</div><div class="tl-title">Terus Berkembang</div><div class="tl-desc">Memperdalam web development modern, ML, dan AI untuk solusi nyata.</div></div>
   </div>
 </section>
 
 <!-- SERTIFIKAT -->
-<section class="sec reveal" id="sertifikat">
+<section class="sec reveal">
   <div class="sec-label">Sertifikat</div>
   <div class="sec-title">Penghargaan & Sertifikat</div>
   <div class="cert-grid">
@@ -452,42 +474,58 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   </div>
 </section>
 
-<!-- BLOG -->
-<section class="sec reveal" id="blog">
-  <div class="sec-label">Blog</div>
-  <div class="sec-title">Catatan Belajar</div>
-  <div class="blog-grid">
-    <div class="blog-card"><div class="blog-tag">Web Dev</div><div class="blog-title">Cara Deploy FastAPI ke Railway dalam 10 Menit</div><div class="blog-desc">Tutorial dari setup sampai live di internet, cocok untuk pemula.</div><div class="blog-date">Juni 2026</div></div>
-    <div class="blog-card"><div class="blog-tag">AI</div><div class="blog-title">Apa itu Groq API dan Kenapa Cepat Banget?</div><div class="blog-desc">Penjelasan singkat tentang Groq dan pengalaman di SkripsiAI.</div><div class="blog-date">Mei 2026</div></div>
-    <div class="blog-card"><div class="blog-tag">Tips</div><div class="blog-title">5 Hal yang Saya Pelajari Selama Kuliah TI</div><div class="blog-desc">Refleksi perjalanan belajar sebagai mahasiswa Teknik Informatika.</div><div class="blog-date">April 2026</div></div>
-  </div>
-</section>
-
 <!-- PROYEK -->
 <section class="sec reveal" id="proyek">
   <div class="sec-label">Proyek</div>
   <div class="sec-title">Yang Pernah Dibuat</div>
   <div class="proj-grid">
     <div class="proj-card"><div class="proj-head"><div class="proj-name">SkripsiAI</div><div class="proj-tag">AI Web App</div></div><div class="proj-desc">Aplikasi AI untuk membantu mahasiswa menemukan topik skripsi relevan. FastAPI + Groq API + Railway.</div><div class="tech-row"><span class="tech">HTML/CSS/JS</span><span class="tech">FastAPI</span><span class="tech">Groq API</span><span class="tech">Railway</span></div></div>
-    <div class="proj-card"><div class="proj-head"><div class="proj-name">SIMRS</div><div class="proj-tag">Full Stack</div></div><div class="proj-desc">Sistem informasi rumah sakit dengan CRUD lengkap menggunakan PHP, MySQL, dan JavaScript.</div><div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">XAMPP</span></div></div>
+    <div class="proj-card"><div class="proj-head"><div class="proj-name">SIMRS</div><div class="proj-tag">Full Stack</div></div><div class="proj-desc">Sistem informasi rumah sakit dengan CRUD lengkap menggunakan PHP dan MySQL.</div><div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">XAMPP</span></div></div>
     <div class="proj-card"><div class="proj-head"><div class="proj-name">SiPustakaKu</div><div class="proj-tag">Full Stack</div></div><div class="proj-desc">Manajemen perpustakaan digital — kelola buku, anggota, dan peminjaman.</div><div class="tech-row"><span class="tech">HTML</span><span class="tech">PHP</span><span class="tech">MySQL</span><span class="tech">XAMPP</span></div></div>
-    <div class="proj-card"><div class="proj-head"><div class="proj-name">Stack — C Language</div><div class="proj-tag">C Language</div></div><div class="proj-desc">Implementasi Stack dalam C: push, pop, peek untuk integer dan karakter.</div><div class="tech-row"><span class="tech">C Language</span><span class="tech">Data Structures</span><span class="tech">Stack ADT</span></div></div>
+    <div class="proj-card"><div class="proj-head"><div class="proj-name">Stack — C Language</div><div class="proj-tag">C Language</div></div><div class="proj-desc">Implementasi Stack dalam C: push, pop, peek untuk integer dan karakter.</div><div class="tech-row"><span class="tech">C Language</span><span class="tech">Data Structures</span></div></div>
   </div>
 </section>
 
-<!-- MOOD TRACKER -->
+<!-- TESTIMONI -->
+<section class="sec reveal" id="testi">
+  <div class="sec-label">Testimoni</div>
+  <div class="sec-title">Yang Mereka Katakan</div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <div class="testi-text">Dhavi adalah mahasiswa yang rajin dan cepat belajar. Proyek SkripsiAI-nya sangat inovatif dan menunjukkan kemampuan teknis yang luar biasa untuk mahasiswa semester 2.</div>
+      <div class="testi-author"><div class="testi-avatar">DR</div><div><div class="testi-name">Dosen Pembimbing</div><div class="testi-role">Universitas Stikubank Semarang</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <div class="testi-text">Teman yang solid! Dhavi selalu mau bantu ketika ada yang kesulitan coding. Penjelasannya mudah dipahami dan sabar banget ngajarin dari nol.</div>
+      <div class="testi-author"><div class="testi-avatar">TM</div><div><div class="testi-name">Teman Sekelas</div><div class="testi-role">Mahasiswa TI Stikubank</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <div class="testi-text">Sangat terkesan dengan portofolio dan proyek yang sudah dibuat. Untuk mahasiswa baru, kemampuan deploy ke cloud dan integrasi AI itu sudah sangat jarang.</div>
+      <div class="testi-author"><div class="testi-avatar">KL</div><div><div class="testi-name">Kakak Tingkat</div><div class="testi-role">Alumni Teknik Informatika</div></div></div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:1rem;font-style:italic">* Ganti dengan testimoni asli kamu</p>
+</section>
+
+<!-- MOOD -->
 <section class="sec reveal" id="mood">
   <div class="sec-label">Interaktif</div>
   <div class="sec-title">Mood Tracker</div>
   <div class="mood-wrap">
     <div class="mood-title">Gimana perasaanmu setelah lihat portofolio ini? 😄</div>
-    <div class="mood-sub">Klik emoji yang sesuai dengan moodmu!</div>
+    <div class="mood-sub">Klik emoji yang sesuai!</div>
     <div class="mood-emojis">
-      <button class="mood-btn" onclick="voteMood(0)" title="Keren!">🔥</button>
-      <button class="mood-btn" onclick="voteMood(1)" title="Suka!">❤️</button>
-      <button class="mood-btn" onclick="voteMood(2)" title="Keren banget!">🤩</button>
-      <button class="mood-btn" onclick="voteMood(3)" title="Haha">😄</button>
-      <button class="mood-btn" onclick="voteMood(4)" title="Biasa aja">😐</button>
+      <button class="mood-btn" onclick="voteMood(0)">🔥</button>
+      <button class="mood-btn" onclick="voteMood(1)">❤️</button>
+      <button class="mood-btn" onclick="voteMood(2)">🤩</button>
+      <button class="mood-btn" onclick="voteMood(3)">😄</button>
+      <button class="mood-btn" onclick="voteMood(4)">😐</button>
     </div>
     <div class="mood-results" id="mood-results"></div>
     <div id="mood-thanks" style="font-size:13px;color:var(--a);margin-top:.75rem;display:none">Terima kasih sudah memberikan reaksi! 🙏</div>
@@ -499,8 +537,7 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   <div class="sec-label">Mini Game</div>
   <div class="sec-title">Klik Angka! 🎮</div>
   <div class="game-wrap">
-    <div class="game-title">Klik angka <span id="game-target-num" style="color:var(--a)">1</span> secepat mungkin!</div>
-    <div class="game-sub">Urutkan dari 1 sampai 16. Skor terbaik kamu akan tersimpan!</div>
+    <div style="font-size:14px;color:var(--muted);margin-bottom:.5rem">Klik angka <span id="game-target-num" style="color:var(--a);font-weight:700">1</span> secepat mungkin!</div>
     <div class="game-score">Skor: <span id="game-score">0</span> | Best: <span id="game-best">0</span></div>
     <div class="game-grid" id="game-grid"></div>
     <button class="btn btn-p" onclick="startGame()" style="margin:0 auto;display:flex"><i class="ti ti-refresh"></i> Main Lagi</button>
@@ -512,10 +549,29 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
   <div class="sec-label">FAQ</div>
   <div class="sec-title">Pertanyaan Umum</div>
   <div class="faq-list">
-    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Apakah kamu menerima freelance? <i class="ti ti-plus"></i></div><div class="faq-a"><p>Ya! Saya terbuka untuk proyek freelance web development, AI integration, dan pembuatan aplikasi. Silakan hubungi via email atau WhatsApp.</p></div></div>
-    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Berapa lama pengerjaan sebuah website? <i class="ti ti-plus"></i></div><div class="faq-a"><p>Tergantung kompleksitas. Website sederhana 3-7 hari, dengan fitur lengkap bisa 2-4 minggu. Selalu diskusi dulu sebelum memulai.</p></div></div>
-    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Teknologi apa yang kamu gunakan? <i class="ti ti-plus"></i></div><div class="faq-a"><p>HTML, CSS, JavaScript, Python, FastAPI, PHP, MySQL, dan berbagai tools modern lainnya sesuai kebutuhan proyek.</p></div></div>
-    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Apakah kamu bisa bantu deploy aplikasi? <i class="ti ti-plus"></i></div><div class="faq-a"><p>Ya! Berpengalaman deploy ke GitHub Pages, Railway, dan hosting lainnya. Bisa bantu setup domain dan SSL juga.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Apakah kamu menerima freelance? <i class="ti ti-plus"></i></div><div class="faq-a"><p>Ya! Terbuka untuk proyek freelance web development, AI integration, dan aplikasi. Hubungi via email atau WhatsApp.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Berapa lama pengerjaan website? <i class="ti ti-plus"></i></div><div class="faq-a"><p>Website sederhana 3-7 hari, dengan fitur lengkap 2-4 minggu. Selalu diskusi dulu sebelum mulai.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Bisa bantu deploy aplikasi? <i class="ti ti-plus"></i></div><div class="faq-a"><p>Ya! Berpengalaman deploy ke GitHub Pages, Railway, dan hosting lainnya. Bisa bantu setup domain dan SSL.</p></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Cara menghubungi kamu? <i class="ti ti-plus"></i></div><div class="faq-a"><p>Via email dhaviafif@gmail.com, Instagram @dhaviafif, atau WhatsApp +62 896-7276-2850.</p></div></div>
+  </div>
+</section>
+
+<!-- KARTU NAMA DOWNLOAD -->
+<section class="sec reveal" id="kartu">
+  <div class="sec-label">Kartu Nama Digital</div>
+  <div class="sec-title">Download Kartu Nama Saya</div>
+  <div class="card-preview" id="card-to-download">
+    <div class="card-name">Dhavi Afif</div>
+    <div class="card-role">Web Developer & AI Enthusiast</div>
+    <div class="card-info">
+      <div class="card-info-item"><i class="ti ti-mail"></i> dhaviafif@gmail.com</div>
+      <div class="card-info-item"><i class="ti ti-brand-github"></i> github.com/dhaviafif-ops</div>
+      <div class="card-info-item"><i class="ti ti-brand-whatsapp"></i> +62 896-7276-2850</div>
+      <div class="card-info-item"><i class="ti ti-map-pin"></i> Semarang, Indonesia</div>
+    </div>
+  </div>
+  <div style="text-align:center">
+    <button class="btn btn-p" onclick="downloadCard()"><i class="ti ti-download"></i> Download Kartu Nama</button>
   </div>
 </section>
 
@@ -541,7 +597,7 @@ footer{text-align:center;padding:2rem;border-top:.5px solid var(--border);font-s
     <div class="form-grid">
       <div class="form-group"><label>Nama</label><input type="text" id="f-name" placeholder="Nama kamu"/></div>
       <div class="form-group"><label>Email</label><input type="email" id="f-email" placeholder="email@kamu.com"/></div>
-      <div class="form-group full"><label>Pesan</label><textarea id="f-msg" placeholder="Tulis pesanmu di sini..."></textarea></div>
+      <div class="form-group full"><label>Pesan</label><textarea id="f-msg" placeholder="Tulis pesanmu..."></textarea></div>
       <div class="form-group full"><button class="btn btn-p" onclick="sendForm()" style="width:fit-content"><i class="ti ti-send"></i> Kirim Pesan</button><div class="form-status" id="form-status"></div></div>
     </div>
   </div>
@@ -566,37 +622,35 @@ window.addEventListener('scroll',()=>{
 });
 
 // LOADER
-let lp=0;const msgs=['Memuat portofolio...','Menyiapkan animasi...','Hampir selesai...','Selamat datang! 👋'];
+let lp=0;const msgs=['Memuat portofolio...','Menyiapkan fitur...','Hampir selesai...','Selamat datang! 👋'];
 const ltxt=document.getElementById('ld-txt');
-const li=setInterval(()=>{lp+=1.2;if(lp>25)ltxt.textContent=msgs[1];if(lp>55)ltxt.textContent=msgs[2];if(lp>85)ltxt.textContent=msgs[3];if(lp>=100){clearInterval(li);setTimeout(()=>{document.getElementById('loader').classList.add('hide');launchConfetti();startGame()},600)}},18);
+const li=setInterval(()=>{lp+=1.2;if(lp>25)ltxt.textContent=msgs[1];if(lp>55)ltxt.textContent=msgs[2];if(lp>85)ltxt.textContent=msgs[3];if(lp>=100){clearInterval(li);setTimeout(()=>{document.getElementById('loader').classList.add('hide');launchConfetti();startGame();addBotMsg('Halo! 👋 Saya asisten Dhavi. Tanya apa saja tentang Dhavi ya!')},600)}},18);
 
 // CONFETTI
 function launchConfetti(){
   const cv=document.getElementById('confetti-canvas');const ctx=cv.getContext('2d');
   cv.width=window.innerWidth;cv.height=window.innerHeight;
-  const colors=['#00d4c8','#4eeee8','#0097a7','#fff','#00ff9d','#7fffd4'];
+  const colors=['#00d4c8','#4eeee8','#0097a7','#fff','#00ff9d'];
   const pieces=[];for(let i=0;i<120;i++)pieces.push({x:Math.random()*cv.width,y:-10-Math.random()*200,w:6+Math.random()*8,h:10+Math.random()*10,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*360,vy:2+Math.random()*4,vx:(Math.random()-.5)*2,vr:(Math.random()-.5)*6});
   let frame=0;
   function draw(){ctx.clearRect(0,0,cv.width,cv.height);pieces.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.rot+=p.vr;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(0,1-frame/120);ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});frame++;if(frame<150)requestAnimationFrame(draw);else ctx.clearRect(0,0,cv.width,cv.height)}
   draw();
 }
 
+// COLOR PICKER
+function setColor(c,el){
+  document.documentElement.setAttribute('data-color',c);
+  document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+
 // SNOW
 let snowOn=false,snowAnim=null;
 function toggleSnow(){
-  const cv=document.getElementById('snow-canvas');
-  const btn=document.getElementById('snow-btn');
-  snowOn=!snowOn;
-  cv.style.display=snowOn?'block':'none';
-  btn.classList.toggle('on',snowOn);
-  if(snowOn){
-    cv.width=window.innerWidth;cv.height=window.innerHeight;
-    const ctx=cv.getContext('2d');
-    const flakes=[];
-    for(let i=0;i<120;i++)flakes.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:1+Math.random()*3,vy:.5+Math.random()*1.5,vx:(Math.random()-.5)*.5});
-    function drawSnow(){ctx.clearRect(0,0,cv.width,cv.height);flakes.forEach(f=>{f.y+=f.vy;f.x+=f.vx;if(f.y>cv.height)f.y=0;if(f.x<0)f.x=cv.width;if(f.x>cv.width)f.x=0;ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.7)';ctx.fill()});snowAnim=requestAnimationFrame(drawSnow)}
-    drawSnow();
-  }else{cancelAnimationFrame(snowAnim);const ctx=cv.getContext('2d');ctx.clearRect(0,0,cv.width,cv.height)}
+  const cv=document.getElementById('snow-canvas');const btn=document.getElementById('snow-btn');
+  snowOn=!snowOn;cv.style.display=snowOn?'block':'none';btn.classList.toggle('on',snowOn);
+  if(snowOn){cv.width=window.innerWidth;cv.height=window.innerHeight;const ctx=cv.getContext('2d');const flakes=[];for(let i=0;i<120;i++)flakes.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:1+Math.random()*3,vy:.5+Math.random()*1.5,vx:(Math.random()-.5)*.5});function drawSnow(){ctx.clearRect(0,0,cv.width,cv.height);flakes.forEach(f=>{f.y+=f.vy;f.x+=f.vx;if(f.y>cv.height)f.y=0;if(f.x<0)f.x=cv.width;if(f.x>cv.width)f.x=0;ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.7)';ctx.fill()});snowAnim=requestAnimationFrame(drawSnow)}drawSnow()}
+  else{cancelAnimationFrame(snowAnim);document.getElementById('snow-canvas').getContext('2d').clearRect(0,0,99999,99999)}
 }
 
 // CURSOR
@@ -604,7 +658,7 @@ const ce=document.getElementById('cur'),re=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;ce.style.left=mx+'px';ce.style.top=my+'px'});
 (function anim(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;re.style.left=rx+'px';re.style.top=ry+'px';requestAnimationFrame(anim)})();
-document.querySelectorAll('a,button,.cc,.proj-card,.skill-item,.stat-item,.cert-card,.learning-card,.blog-card,.service-card,.faq-q,.mood-btn,.game-btn,.ts-card').forEach(el=>{
+document.querySelectorAll('a,button,.cc,.proj-card,.skill-item,.stat-item,.cert-card,.learning-card,.service-card,.faq-q,.mood-btn,.game-btn,.ts-card,.testi-card').forEach(el=>{
   el.addEventListener('mouseenter',()=>{re.style.width='52px';re.style.height='52px';playHover()});
   el.addEventListener('mouseleave',()=>{re.style.width='36px';re.style.height='36px'});
 });
@@ -614,16 +668,16 @@ const trCv=document.getElementById('trail-canvas'),tctx=trCv.getContext('2d');
 trCv.width=window.innerWidth;trCv.height=window.innerHeight;
 const trail=[];
 document.addEventListener('mousemove',e=>trail.push({x:e.clientX,y:e.clientY,age:0}));
-(function drawTrail(){tctx.clearRect(0,0,trCv.width,trCv.height);for(let i=trail.length-1;i>=0;i--){const t=trail[i];t.age++;if(t.age>20){trail.splice(i,1);continue}const alpha=1-t.age/20;tctx.beginPath();tctx.arc(t.x,t.y,4*(1-t.age/20),0,Math.PI*2);tctx.fillStyle='rgba(0,212,200,'+(alpha*.5)+')';tctx.fill()}requestAnimationFrame(drawTrail)})();
+(function drawTrail(){tctx.clearRect(0,0,trCv.width,trCv.height);for(let i=trail.length-1;i>=0;i--){const t=trail[i];t.age++;if(t.age>20){trail.splice(i,1);continue}tctx.beginPath();tctx.arc(t.x,t.y,4*(1-t.age/20),0,Math.PI*2);tctx.fillStyle='rgba(0,212,200,'+(1-t.age/20)*.5+')';tctx.fill()}requestAnimationFrame(drawTrail)})();
 
 // PARTICLES
 const cv2=document.getElementById('particles'),pctx=cv2.getContext('2d');
 let W,H;const pts=[];
 function resize(){W=cv2.width=window.innerWidth;H=cv2.height=window.innerHeight}resize();window.addEventListener('resize',resize);
 for(let i=0;i<55;i++)pts.push({x:Math.random()*1920,y:Math.random()*1080,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.5+.4});
-(function drawP(){pctx.clearRect(0,0,W,H);const dark=document.documentElement.getAttribute('data-theme')==='dark';const c=dark?'0,212,200':'0,151,167';pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;pctx.beginPath();pctx.arc(p.x,p.y,p.r,0,Math.PI*2);pctx.fillStyle='rgba('+c+',.5)';pctx.fill()});pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){pctx.beginPath();pctx.moveTo(a.x,a.y);pctx.lineTo(b.x,b.y);pctx.strokeStyle='rgba('+c+','+(0.12*(1-d/120))+')';pctx.lineWidth=.6;pctx.stroke()}}));requestAnimationFrame(drawP)})();
+(function drawP(){pctx.clearRect(0,0,W,H);const c='0,212,200';pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;pctx.beginPath();pctx.arc(p.x,p.y,p.r,0,Math.PI*2);pctx.fillStyle='rgba('+c+',.4)';pctx.fill()});pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){pctx.beginPath();pctx.moveTo(a.x,a.y);pctx.lineTo(b.x,b.y);pctx.strokeStyle='rgba('+c+','+(0.1*(1-d/120))+')';pctx.lineWidth=.6;pctx.stroke()}}));requestAnimationFrame(drawP)})();
 
-// SOUND HOVER
+// SOUND
 let sctx=null;
 function playHover(){try{if(!sctx)sctx=new(window.AudioContext||window.webkitAudioContext)();const o=sctx.createOscillator();const g=sctx.createGain();o.type='sine';o.frequency.value=800;g.gain.setValueAtTime(0.02,sctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,sctx.currentTime+0.06);o.connect(g);g.connect(sctx.destination);o.start();o.stop(sctx.currentTime+0.06)}catch(e){}}
 
@@ -631,33 +685,27 @@ function playHover(){try{if(!sctx)sctx=new(window.AudioContext||window.webkitAud
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');e.target.querySelectorAll('.skill-fill,.lc-fill').forEach(b=>{b.style.width=b.dataset.w+'%'});e.target.querySelectorAll('[data-target]').forEach(el=>{let n=0;const tgt=+el.dataset.target;const s=setInterval(()=>{n+=Math.ceil(tgt/25);if(n>=tgt){n=tgt;clearInterval(s)}el.textContent=n+(tgt>2?'+':'')},45)});obs.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-// THEME WITH ANIMATION
+// THEME
 function toggleTheme(){
-  const overlay=document.getElementById('theme-overlay');
-  overlay.classList.add('active');
-  setTimeout(()=>{
-    const dark=document.documentElement.getAttribute('data-theme')==='dark';
-    document.documentElement.setAttribute('data-theme',dark?'light':'dark');
-    document.getElementById('theme-btn').innerHTML=dark?'<i class="ti ti-sun"></i>':'<i class="ti ti-moon"></i>';
-    setTimeout(()=>overlay.classList.remove('active'),300);
-  },300);
+  const overlay=document.getElementById('theme-overlay');overlay.classList.add('active');
+  setTimeout(()=>{const dark=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',dark?'light':'dark');document.getElementById('theme-btn').innerHTML=dark?'<i class="ti ti-sun"></i>':'<i class="ti ti-moon"></i>';setTimeout(()=>overlay.classList.remove('active'),300)},300);
 }
 
 // LANG
-const T={id:{"badge":"Tersedia untuk kolaborasi","hero-greet":"Halo, saya","hero-sub":"Pengembang yang passionate dalam membangun solusi digital modern. Fokus pada web development, AI, dan aplikasi yang bermakna bagi mahasiswa Indonesia.","btn-contact":"Hubungi Saya","btn-cv":"Download CV"},en:{"badge":"Available for collaboration","hero-greet":"Hi, I'm","hero-sub":"A passionate developer building modern digital solutions. Focused on web development, AI, and apps that matter for Indonesian students.","btn-contact":"Contact Me","btn-cv":"Download CV"}};
+const T={id:{"badge":"Tersedia untuk kolaborasi","hero-greet":"Halo, saya","hero-sub":"Pengembang yang passionate membangun solusi digital modern. Fokus web development, AI, dan aplikasi bermakna untuk mahasiswa Indonesia.","btn-contact":"Hubungi Saya","btn-cv":"Download CV"},en:{"badge":"Available for collaboration","hero-greet":"Hi, I'm","hero-sub":"A passionate developer building modern digital solutions. Focused on web development, AI, and apps that matter for Indonesian students.","btn-contact":"Contact Me","btn-cv":"Download CV"}};
 let lang='id';
 function applyLang(){document.querySelectorAll('[data-id]').forEach(el=>{const k=el.getAttribute('data-id');if(T[lang]&&T[lang][k])el.innerHTML=T[lang][k]});document.querySelectorAll('.nav-link').forEach(a=>{a.textContent=lang==='id'?a.getAttribute('data-id-id'):a.getAttribute('data-id-en')});document.getElementById('lang-btn').innerHTML='<i class="ti ti-language"></i> '+(lang==='id'?'ID':'EN')}
 function toggleLang(){lang=lang==='id'?'en':'id';applyLang()}
-if(navigator.language&&navigator.language.startsWith('en')){lang='en';applyLang()}else applyLang();
+if(navigator.language&&navigator.language.startsWith('en')){lang='en';}applyLang();
 
 // MUSIC
 let actx=null,playing=false,osc=null,gn=null,ni=null;
-function toggleMusic(){const btn=document.getElementById('music-btn');if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();if(!playing){osc=actx.createOscillator();gn=actx.createGain();osc.type='sine';gn.gain.setValueAtTime(0,actx.currentTime);gn.gain.linearRampToValueAtTime(0.035,actx.currentTime+.5);osc.connect(gn);gn.connect(actx.destination);osc.start();playing=true;btn.classList.add('on');btn.innerHTML='<i class="ti ti-music-off"></i>';const ns=[261,293,329,349,392,440,392,349];let idx=0;ni=setInterval(()=>{if(!playing)return;idx=(idx+1)%ns.length;osc.frequency.setTargetAtTime(ns[idx],actx.currentTime,.08)},650)}else{clearInterval(ni);gn.gain.linearRampToValueAtTime(0,actx.currentTime+.3);setTimeout(()=>{try{osc.stop()}catch(e){}playing=false},350);btn.classList.remove('on');btn.innerHTML='<i class="ti ti-music"></i>'}}
+function toggleMusic(){const btn=document.getElementById('music-btn');if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();if(!playing){osc=actx.createOscillator();gn=actx.createGain();osc.type='sine';gn.gain.setValueAtTime(0,actx.currentTime);gn.gain.linearRampToValueAtTime(0.03,actx.currentTime+.5);osc.connect(gn);gn.connect(actx.destination);osc.start();playing=true;btn.classList.add('on');btn.innerHTML='<i class="ti ti-music-off"></i>';const ns=[261,293,329,349,392,440,392,349];let idx=0;ni=setInterval(()=>{if(!playing)return;idx=(idx+1)%ns.length;osc.frequency.setTargetAtTime(ns[idx],actx.currentTime,.08)},650)}else{clearInterval(ni);gn.gain.linearRampToValueAtTime(0,actx.currentTime+.3);setTimeout(()=>{try{osc.stop()}catch(e){}playing=false},350);btn.classList.remove('on');btn.innerHTML='<i class="ti ti-music"></i>'}}
 
 // TYPING
 const tt={id:['Mahasiswa Teknik Informatika','Web Developer','AI Enthusiast','Problem Solver'],en:['Informatics Student','Web Developer','AI Enthusiast','Problem Solver']};
-let ti=0,ci=0,dl=false;
-function type(){const el=document.getElementById('typing-text');const ts=tt[lang];const cur=ts[ti%ts.length];if(!dl){el.textContent=cur.slice(0,ci+1);ci++;if(ci===cur.length){dl=true;setTimeout(type,1800);return}}else{el.textContent=cur.slice(0,ci-1);ci--;if(ci===0){dl=false;ti++}}setTimeout(type,dl?55:95)}type();
+let ti2=0,ci=0,dl=false;
+function type(){const el=document.getElementById('typing-text');const ts=tt[lang];const cur=ts[ti2%ts.length];if(!dl){el.textContent=cur.slice(0,ci+1);ci++;if(ci===cur.length){dl=true;setTimeout(type,1800);return}}else{el.textContent=cur.slice(0,ci-1);ci--;if(ci===0){dl=false;ti2++}}setTimeout(type,dl?55:95)}type();
 
 // 3D TILT
 document.querySelectorAll('.proj-card').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=((e.clientX-r.left)/r.width-.5)*16;const y=((e.clientY-r.top)/r.height-.5)*-16;card.style.transform=`perspective(700px) rotateY(${x}deg) rotateX(${y}deg) translateY(-4px)`});card.addEventListener('mouseleave',()=>{card.style.transform=''})});
@@ -671,70 +719,68 @@ function sendForm(){const name=document.getElementById('f-name').value;const ema
 // FAQ
 function toggleFaq(el){const ans=el.nextElementSibling;const isOpen=ans.classList.contains('open');document.querySelectorAll('.faq-a').forEach(a=>a.classList.remove('open'));document.querySelectorAll('.faq-q').forEach(q=>q.classList.remove('open'));if(!isOpen){ans.classList.add('open');el.classList.add('open')}}
 
-// MOOD TRACKER
+// MOOD
 const moods=['🔥','❤️','🤩','😄','😐'];
 let moodVotes=JSON.parse(localStorage.getItem('dhavi_mood')||'[0,0,0,0,0]');
 let voted=localStorage.getItem('dhavi_mood_voted')==='1';
-function renderMoodResults(){
-  const total=moodVotes.reduce((a,b)=>a+b,0)||1;
-  const el=document.getElementById('mood-results');
-  el.innerHTML=moodVotes.map((v,i)=>`<div class="mood-result-item">${moods[i]} <div class="mood-bar-wrap"><div class="mood-bar-fill" style="width:${Math.round(v/total*100)}%"></div></div> ${v}</div>`).join('');
-}
-function voteMood(i){
-  if(voted)return;
-  moodVotes[i]++;
-  localStorage.setItem('dhavi_mood',JSON.stringify(moodVotes));
-  localStorage.setItem('dhavi_mood_voted','1');
-  voted=true;
-  document.querySelectorAll('.mood-btn')[i].classList.add('selected');
-  renderMoodResults();
-  document.getElementById('mood-thanks').style.display='block';
-}
+function renderMoodResults(){const total=moodVotes.reduce((a,b)=>a+b,0)||1;document.getElementById('mood-results').innerHTML=moodVotes.map((v,i)=>`<div class="mood-result-item">${moods[i]} <div class="mood-bar-wrap"><div class="mood-bar-fill" style="width:${Math.round(v/total*100)}%"></div></div> ${v}</div>`).join('')}
+function voteMood(i){if(voted)return;moodVotes[i]++;localStorage.setItem('dhavi_mood',JSON.stringify(moodVotes));localStorage.setItem('dhavi_mood_voted','1');voted=true;document.querySelectorAll('.mood-btn')[i].classList.add('selected');renderMoodResults();document.getElementById('mood-thanks').style.display='block'}
 renderMoodResults();
 
-// MINI GAME - KLIK ANGKA
+// GAME
 let gameNums=[],gameTarget=1,gameScore=0,gameBest=parseInt(localStorage.getItem('dhavi_game_best')||'0'),gameStart=null;
-function startGame(){
-  gameNums=Array.from({length:16},(_,i)=>i+1).sort(()=>Math.random()-.5);
-  gameTarget=1;gameScore=0;gameStart=null;
-  document.getElementById('game-score').textContent='0';
-  document.getElementById('game-best').textContent=gameBest;
-  document.getElementById('game-target-num').textContent='1';
-  const grid=document.getElementById('game-grid');
-  grid.innerHTML=gameNums.map(n=>`<button class="game-btn" onclick="clickNum(${n},this)">${n}</button>`).join('');
+function startGame(){gameNums=Array.from({length:16},(_,i)=>i+1).sort(()=>Math.random()-.5);gameTarget=1;gameScore=0;gameStart=null;document.getElementById('game-score').textContent='0';document.getElementById('game-best').textContent=gameBest;document.getElementById('game-target-num').textContent='1';document.getElementById('game-grid').innerHTML=gameNums.map(n=>`<button class="game-btn" onclick="clickNum(${n},this)">${n}</button>`).join('')}
+function clickNum(n,el){if(!gameStart)gameStart=Date.now();if(n===gameTarget){el.classList.add('hit');el.disabled=true;gameTarget++;gameScore++;document.getElementById('game-score').textContent=gameScore;document.getElementById('game-target-num').textContent=gameTarget>16?'✅':gameTarget;if(gameTarget>16){const t=Math.round((Date.now()-gameStart)/100)/10;if(gameScore>gameBest){gameBest=gameScore;localStorage.setItem('dhavi_game_best',gameBest)}document.getElementById('game-score').textContent=gameScore+' ('+t+'s)';document.getElementById('game-best').textContent=gameBest}}else{el.classList.add('miss');setTimeout(()=>el.classList.remove('miss'),300)}}
+
+// AI CHATBOT
+function toggleChat(){const box=document.getElementById('chat-box');box.classList.toggle('open')}
+function addBotMsg(text){const msgs=document.getElementById('chat-msgs');msgs.innerHTML+=`<div class="chat-msg bot">${text}</div>`;msgs.scrollTop=msgs.scrollHeight}
+function addUserMsg(text){const msgs=document.getElementById('chat-msgs');msgs.innerHTML+=`<div class="chat-msg user">${text}</div>`;msgs.scrollTop=msgs.scrollHeight}
+function showTyping(){const msgs=document.getElementById('chat-msgs');msgs.innerHTML+=`<div class="chat-typing" id="typing-indicator"><span></span><span></span><span></span></div>`;msgs.scrollTop=msgs.scrollHeight}
+function removeTyping(){const t=document.getElementById('typing-indicator');if(t)t.remove()}
+const chatKnowledge={
+  nama:['Nama saya Dhavi Afif 👋','Saya Dhavi Afif, mahasiswa Teknik Informatika di Universitas Stikubank Semarang.'],
+  kuliah:['Saya kuliah di Universitas Stikubank Semarang, jurusan Teknik Informatika, semester 2.','Dhavi kuliah TI (Teknik Informatika) di Stikubank Semarang.'],
+  skill:['Skills utama Dhavi: HTML/CSS, JavaScript, Python, FastAPI, PHP, MySQL, C Language, Git/GitHub, Railway, dan Struktur Data.','Dhavi menguasai web development (HTML, CSS, JS, PHP), Python, FastAPI, database MySQL, dan AI integration.'],
+  proyek:['Proyek Dhavi: SkripsiAI (AI app), SIMRS (sistem RS), SiPustakaKu (perpustakaan digital), dan Stack C Language.','Dhavi punya 4 proyek: SkripsiAI berbasis AI, SIMRS, SiPustakaKu, dan implementasi Stack dalam C.'],
+  kontak:['Hubungi Dhavi via email dhaviafif@gmail.com, WhatsApp +62 896-7276-2850, atau Instagram @dhaviafif.','Bisa kontak Dhavi di dhaviafif@gmail.com atau WA 089672762850.'],
+  freelance:['Ya, Dhavi menerima freelance! Khususnya web development, AI integration, dan pembuatan aplikasi.','Dhavi open untuk proyek freelance. Hubungi via email atau WhatsApp ya!'],
+  ai:['Dhavi tertarik di bidang AI, terutama integrasi LLM ke web app. Sudah bikin SkripsiAI pakai Groq API dan llama-3.3-70b.','Dhavi sudah berpengalaman integrasi AI dengan FastAPI dan Groq API di proyek SkripsiAI.'],
+  hobi:['Hobi Dhavi: coding, belajar AI/ML, dengerin musik sambil ngoding, main game, dan nonton film.','Selain coding, Dhavi suka musik, game, dan explore teknologi baru.'],
+};
+function getBotReply(msg){
+  const m=msg.toLowerCase();
+  if(m.includes('nama')||m.includes('siapa'))return chatKnowledge.nama[Math.floor(Math.random()*chatKnowledge.nama.length)];
+  if(m.includes('kuliah')||m.includes('kampus')||m.includes('univ')||m.includes('stikubank'))return chatKnowledge.kuliah[Math.floor(Math.random()*chatKnowledge.kuliah.length)];
+  if(m.includes('skill')||m.includes('bisa')||m.includes('teknologi')||m.includes('keahlian'))return chatKnowledge.skill[Math.floor(Math.random()*chatKnowledge.skill.length)];
+  if(m.includes('proyek')||m.includes('project')||m.includes('karya')||m.includes('buat'))return chatKnowledge.proyek[Math.floor(Math.random()*chatKnowledge.proyek.length)];
+  if(m.includes('kontak')||m.includes('hubungi')||m.includes('email')||m.includes('wa')||m.includes('whatsapp'))return chatKnowledge.kontak[Math.floor(Math.random()*chatKnowledge.kontak.length)];
+  if(m.includes('freelance')||m.includes('kerja')||m.includes('hire')||m.includes('rekrut'))return chatKnowledge.freelance[Math.floor(Math.random()*chatKnowledge.freelance.length)];
+  if(m.includes('ai')||m.includes('artificial')||m.includes('machine')||m.includes('groq'))return chatKnowledge.ai[Math.floor(Math.random()*chatKnowledge.ai.length)];
+  if(m.includes('hobi')||m.includes('suka')||m.includes('senang'))return chatKnowledge.hobi[Math.floor(Math.random()*chatKnowledge.hobi.length)];
+  if(m.includes('halo')||m.includes('hi')||m.includes('hey')||m.includes('pagi')||m.includes('siang')||m.includes('malam'))return 'Halo! 👋 Ada yang ingin kamu tanyakan tentang Dhavi?';
+  return 'Maaf, saya belum bisa jawab itu 😅 Coba tanya tentang: nama, kuliah, skill, proyek, kontak, freelance, AI, atau hobi Dhavi!';
 }
-function clickNum(n,el){
-  if(!gameStart)gameStart=Date.now();
-  if(n===gameTarget){
-    el.classList.add('hit');el.disabled=true;
-    gameTarget++;gameScore++;
-    document.getElementById('game-score').textContent=gameScore;
-    document.getElementById('game-target-num').textContent=gameTarget>16?'✅':gameTarget;
-    if(gameTarget>16){
-      const t=Math.round((Date.now()-gameStart)/100)/10;
-      if(gameScore>gameBest){gameBest=gameScore;localStorage.setItem('dhavi_game_best',gameBest)}
-      document.getElementById('game-score').textContent=gameScore+' ('+t+'s)';
-      document.getElementById('game-best').textContent=gameBest;
-    }
-  }else{el.classList.add('miss');setTimeout(()=>el.classList.remove('miss'),300)}
+function sendChat(){
+  const input=document.getElementById('chat-input');const text=input.value.trim();
+  if(!text)return;addUserMsg(text);input.value='';
+  showTyping();setTimeout(()=>{removeTyping();addBotMsg(getBotReply(text))},800+Math.random()*600);
 }
 
-// LIVE COUNTER - JAM KERJA & HARI BELAJAR
-const startDate=new Date('2025-01-01');
-function updateCounters(){
-  const now=new Date();
-  const days=Math.floor((now-startDate)/(1000*60*60*24));
-  const lines=days*15+Math.floor(Math.random()*5);
-  const hToday=Math.floor((now.getHours()*60+now.getMinutes())*0.03);
-  const mToday=(now.getMinutes()%60);
-  document.getElementById('days-coding').textContent=days.toLocaleString();
-  document.getElementById('lines-code').textContent=lines.toLocaleString();
-  document.getElementById('hours-today').textContent=hToday+'j '+mToday+'m';
+// DOWNLOAD KARTU NAMA
+function downloadCard(){
+  const card=document.getElementById('card-to-download');
+  const data=`data:text/html;charset=utf-8,<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0d1a1c}.card{background:linear-gradient(135deg,%230097a7,%23004d55);border-radius:20px;padding:2rem;width:380px;color:white}.name{font-size:1.5rem;font-weight:800;margin-bottom:.25rem}.role{font-size:13px;opacity:.7;margin-bottom:1.25rem}.info{display:flex;flex-direction:column;gap:6px;font-size:12px;opacity:.8}</style></head><body><div class="card"><div class="name">Dhavi Afif</div><div class="role">Web Developer & AI Enthusiast</div><div class="info"><div>📧 dhaviafif@gmail.com</div><div>🐙 github.com/dhaviafif-ops</div><div>📱 +62 896-7276-2850</div><div>📍 Semarang, Indonesia</div></div></div></body></html>`;
+  const a=document.createElement('a');a.href=data;a.download='kartu-nama-dhavi.html';a.click();
 }
+
+// LIVE COUNTER
+const startDate=new Date('2025-01-01');
+function updateCounters(){const now=new Date();const days=Math.floor((now-startDate)/(1000*60*60*24));document.getElementById('days-coding').textContent=days.toLocaleString();document.getElementById('lines-code').textContent=(days*15).toLocaleString();document.getElementById('hours-today').textContent=Math.floor(now.getHours()*.4)+'j '+now.getMinutes()+'m'}
 updateCounters();setInterval(updateCounters,60000);
 
 // VISITOR
-let v=parseInt(localStorage.getItem('dhavi_v10')||'0')+1;localStorage.setItem('dhavi_v10',v);
+let v=parseInt(localStorage.getItem('dhavi_v11')||'0')+1;localStorage.setItem('dhavi_v11',v);
 let d=0;const tgt=v+Math.floor(Math.random()*500)+200;
 const ctr=setInterval(()=>{d+=Math.ceil((tgt-d)/7);document.getElementById('visit-count').textContent=d.toLocaleString();if(d>=tgt)clearInterval(ctr)},20);
 </script>
